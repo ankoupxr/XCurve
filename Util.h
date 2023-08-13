@@ -1,0 +1,9 @@
+
+
+namespace XCurve
+{
+	namespace util
+	{
+
+	}
+}
