@@ -4,7 +4,6 @@
 
 namespace XCurve
 {
-	class Point3d;
 	class BezierCurve : Curve
 	{
 	public:
@@ -29,7 +28,26 @@ namespace XCurve
 			return temp;
 		};
 
+		/// <summary>
+		/// 通过DeCasteliau多项式计算Bezier的点
+		/// </summary>
+		/// <param name="controlPoints"></param>
+		/// <param name="degree"></param>
+		/// <returns></returns>
+		static Point3d ComputePointByDeCasteliau(const std::vector<Point3d> controlPoints, unsigned int degree,double t)
+		{
+			std::vector<Point3d> tempPoints = controlPoints;
 
+			for (int k = 1; k < degree; k++) {
+				for (int i = 0; i < degree - k; i++)
+				{
+					tempPoints[i].SetX((1 - t) * tempPoints[i].Location()(0) + t * tempPoints[i + 1].Location()(0));
+					tempPoints[i].SetY((1 - t) * tempPoints[i].Location()(1) + t * tempPoints[i + 1].Location()(1));
+				}
+			}
+
+			return tempPoints[0];
+		}
 
 
 	private:

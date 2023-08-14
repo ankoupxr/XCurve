@@ -1,19 +1,22 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <Eigen/Core>
-using namespace std;
+#include "BezierCurve.h"
+
+
+
 
 int main()
 {
-	//建立2行3列矩阵，并为矩阵赋值
-	Eigen::Matrix<float, 2, 3> matrix_23;
-	matrix_23 << 1, 2, 3, 4, 5, 6;
-	cout << matrix_23 << endl;
-	//访问矩阵中的元素
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 3; j++)
-			cout << matrix_23(i, j) << "\t";
-		cout << endl;
-	}
-	system("pause");
+    std::vector<XCurve::Point3d> points;
+    points.push_back(XCurve::Point3d(0, 0,0));
+    points.push_back(XCurve::Point3d(1, 3, 0));
+    points.push_back(XCurve::Point3d(2, 1, 0));
+    points.push_back(XCurve::Point3d(3, 4, 0));
+
+
+    double t = 0.5;
+    auto result = 
+        XCurve::BezierCurve::ComputePointByDeCasteliau(points, 4, t);
+    result.PrintCoordinates();
 }
