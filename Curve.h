@@ -5,6 +5,8 @@ namespace XCurve
 	class Curve
 	{
 	public:
+
+
 		static double Bernstein(unsigned int i, unsigned int degree, double paramT) 
 		{
 			if (i < 0 || i > degree)

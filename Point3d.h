@@ -40,6 +40,21 @@ namespace XCurve
             m_coord(2) = z;
         }
 
+        double GetX()
+        {
+            return m_coord(0);
+        }
+
+        double GetY()
+        {
+            return m_coord(1);
+        }
+
+        double GetZ()
+        {
+            return m_coord(2);
+        }
+
         Eigen::Vector3d Location()
         {
             return m_coord;
