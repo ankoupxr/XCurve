@@ -3,4 +3,14 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BezierCurve.h" />
+    <ClInclude Include="Curve.h" />
+    <ClInclude Include="Point3d.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="BezierSurface.h" />
+    <ClInclude Include="BSplineCurve.h" />
+    <ClInclude Include="NurbsCurve.h" />
+    <ClInclude Include="BSplineSurface.h" />
+  </ItemGroup>
 </Project>

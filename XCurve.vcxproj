@@ -132,7 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BezierCurve.h" />
+    <ClInclude Include="BezierSurface.h" />
+    <ClInclude Include="BSplineCurve.h" />
+    <ClInclude Include="BSplineSurface.h" />
     <ClInclude Include="Curve.h" />
+    <ClInclude Include="NurbsCurve.h" />
     <ClInclude Include="Point3d.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
