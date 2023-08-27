@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle("绘制窗口");
+    setWindowTitle("XNurbs");
 }
 
 MainWindow::~MainWindow()

@@ -5,7 +5,7 @@
 #include <GL/glut.h>
 #include <QOpenGLWidget>
 #include <QKeyEvent>
-#include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLFunctions>
 #include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QMouseEvent>
@@ -20,6 +20,7 @@
 #include <Eigen/Dense>
 #include <Eigen/Core>
 #include <point3dw.h>
+#include <xcurve.h>
 
 namespace Ui {
 class renderwindow;
@@ -37,6 +38,9 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *e);
 
 private slots:
     //void clcFunc(); //清屏
@@ -48,13 +52,8 @@ private:
     GLfloat tra, xRot, yRot, zRot; //控制缩放等的多个数值
     double trax, tray; //控制视景体平移的两个参量
     QPoint oldPoint; //当前鼠标点击的QPoint类型值
-    bool isInputting;
-    //QVector<Point> pointVector; //存放点的容器
-    //void drawPoint(Point a); //绘制点的函数
-    //void drawLines(Point a, Point b); //绘制直线函数
-    //Point p[5][5]; //全局变量存放控制顶点
-    double *ut, *vt; //两个存放double类型的数组的指针
-    bool isDraw, isRead; //用于判断绘制曲面的两个布尔值
+    xnurbs* m_test;
+    GLUnurbsObj* pNurb;
 };
 
 #endif // RENDERWINDOW_H

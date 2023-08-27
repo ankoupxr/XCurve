@@ -5,8 +5,9 @@
 #include <GL/glut.h>
 #include <point3dw.h>
 #include <vector>
+#include <xcurve.h>
 
-class xnurbs
+class xnurbs : xcurve
 {
 public:
     xnurbs();
@@ -18,7 +19,6 @@ private:
     float*** m_glcontrolPoints;
     std::vector<float> m_knots;
     float* m_glknots;
-    GLUnurbsObj* pNurb = NULL;
 };
 
 #endif // XNURBS_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>600</height>
+    <width>1249</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>1020</x>
       <y>9</y>
-      <width>151</width>
-      <height>541</height>
+      <width>221</width>
+      <height>621</height>
      </rect>
     </property>
     <widget class="QPushButton" name="readBtn">
@@ -79,10 +79,10 @@
    <widget class="renderwindow" name="RM" native="true">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>30</y>
-      <width>901</width>
-      <height>461</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1001</width>
+      <height>621</height>
      </rect>
     </property>
    </widget>
@@ -92,8 +92,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
-     <height>22</height>
+     <width>1249</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
