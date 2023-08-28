@@ -7,10 +7,11 @@
 class XNurbsSurface
 {
 public:
-    XNurbsSurface();
+    XNurbsSurface(std::vector<std::vector<Point3dW>> controlPoints,
+                  std::vector<double> v,std::vector<double> u,int _m,int _n,std::vector<std::vector<double>> weights);
     ~XNurbsSurface();
     void GetKnotVector(std::vector<double> T,int nCount,int num,int order, bool bU);//获取节点矢量
-    void BasicFunction(double u,int i,int k,std::vector<double> T);
+    double BasicFunction(double u,int i,int k,double T);
     void DrawGrid();
 private:
     int m,p;
