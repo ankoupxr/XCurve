@@ -11,6 +11,8 @@ CONFIG += c++17
 INCLUDEPATH += G:\myrender\eigen-3.4.0
 
 SOURCES += \
+    bsplinecurve.cpp \
+    curveutil.cpp \
     main.cpp \
     mainwindow.cpp \
     renderwindow.cpp \
@@ -19,6 +21,8 @@ SOURCES += \
     xnurbssurface.cpp
 
 HEADERS += \
+    bsplinecurve.h \
+    curveutil.h \
     mainwindow.h \
     point3d.h \
     point3dw.h \
