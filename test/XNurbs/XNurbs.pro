@@ -11,7 +11,6 @@ CONFIG += c++17
 INCLUDEPATH += G:\myrender\eigen-3.4.0
 
 SOURCES += \
-    bsplinecurve.cpp \
     curveutil.cpp \
     main.cpp \
     mainwindow.cpp \

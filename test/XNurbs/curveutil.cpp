@@ -1,6 +1,6 @@
 #include "curveutil.h"
 
-int CurveUtil::FindSpan(int degree,std::vector<double>& knotVector, double u)
+int CurveUtil::FindSpan(int degree,const std::vector<double>& knotVector, double u)
 {
     int n = knotVector.size() - degree - 2;
 
@@ -22,3 +22,5 @@ int CurveUtil::FindSpan(int degree,std::vector<double>& knotVector, double u)
     }
     return(mid);
 }
+
+
