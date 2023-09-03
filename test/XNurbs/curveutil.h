@@ -8,7 +8,7 @@ class CurveUtil
 public:
     static int FindSpan(int degree,const std::vector<double>& knotVector, double u);
     static std::vector<double> BasicFunctions(int spanIndex,int degree,const std::vector<double>& knotVector,double t);
-    static std::vector<double> AllBasicFunctions(int spanIndex,int degree,const std::vector<double>& knotVector,double t);
+    static std::vector<std::vector<double>> BasisFunctionsDerivs(int spanIndex,int degree,int derivs,const std::vector<double>& knotVector, double paramT);
 };
 
 #endif // CURVEUTIL_H

@@ -14,6 +14,7 @@ SOURCES += \
     curveutil.cpp \
     main.cpp \
     mainwindow.cpp \
+    mathutil.cpp \
     renderwindow.cpp \
     xcurve.cpp \
     xnurbs.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     bsplinecurve.h \
     curveutil.h \
     mainwindow.h \
+    mathutil.h \
     point3d.h \
     point3dw.h \
     renderwindow.h \

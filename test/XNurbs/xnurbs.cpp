@@ -36,22 +36,42 @@ xnurbs::xnurbs(std::vector<std::vector<Point3dW>> controlPoints,std::vector<floa
 
 xnurbs::~xnurbs()
 {
-    for (int i = 0; i < m_controlPoints.size(); i++)
+}
+
+std::vector<Point3dW> xnurbs::ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints)
+{
+    m_curvePoints.clear();
+    std::vector<Point3dW> derivatives(derivative + 1);
+    std::vector<Point3dW> ders = BSplineCurve::ComputeDerivatives(degree, derivative, knotVector, paramT, controlPoints);
+
+    std::vector<Point3dW> Aders(derivative + 1);
+    for (int i = 0; i < ders.size(); i++)
     {
-        for (int j = 0; j < m_controlPoints[i].size(); j++)
-        {
-            delete[] m_glcontrolPoints[i][j];
-        }
-        delete[] m_glcontrolPoints[i];
+        Aders[i] = ders[i];
     }
-    delete[] m_glcontrolPoints;
+    std::vector<double> wders(derivative + 1);
+    for (int i = 0; i < ders.size(); i++)
+    {
+        wders[i] = ders[i].GetW();
+    }
 
-    delete[] m_glknots;
-
+    for (int k = 0; k <= derivative; k++)
+    {
+        Point3dW v = Aders[k];
+        for (int i = 1; i <= k; i++)
+        {
+            v = v - derivatives[k - i] * MathUtil::Binomial(k, i) * wders[i];
+        }
+        derivatives[k] = v/wders[0];
+        m_curvePoints.push_back(derivatives[k]);
+    }
+    return derivatives;
 }
 
 void xnurbs::draw()
 {
-
-
+    for(size_t i = 0;i < m_curvePoints.size()-1;i++)
+    {
+        drawline(m_curvePoints[i],m_curvePoints[i+1]);
+    }
 }
