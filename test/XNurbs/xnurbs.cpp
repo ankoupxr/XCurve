@@ -6,67 +6,38 @@ xnurbs::xnurbs()
 
 }
 
-xnurbs::xnurbs(std::vector<std::vector<Point3dW>> controlPoints,std::vector<float> knots)
+xnurbs::xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree,double paramT)
 {
     this->m_controlPoints = controlPoints;
     this->m_knots = knots;
-
-    this->m_glcontrolPoints = new float**[controlPoints.size()];
-    for (int i = 0; i < controlPoints.size(); i++)
-    {
-        m_glcontrolPoints[i] = new float*[controlPoints[i].size()];
-        for (int j = 0;j < m_controlPoints[i].size(); j++)
-        {
-            m_glcontrolPoints[i][j] = new float[4];
-            m_glcontrolPoints[i][j][0] = m_controlPoints[i][j].GetX();
-            m_glcontrolPoints[i][j][1] = m_controlPoints[i][j].GetY();
-            m_glcontrolPoints[i][j][2] = m_controlPoints[i][j].GetZ();
-            m_glcontrolPoints[i][j][3] = m_controlPoints[i][j].GetW();
-        }
-    }
-
-    this->m_glknots = new float[m_knots.size()];
-    for(int i = 0; i < m_knots.size(); i++)
-    {
-        m_glknots[i] = m_knots.at(i);
-    }
-
-
+    this->m_degree = degree;
+    this->m_paramT = paramT;
 }
 
 xnurbs::~xnurbs()
 {
 }
 
-std::vector<Point3dW> xnurbs::ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints)
+void xnurbs::ComputeRationalCurve()
 {
     m_curvePoints.clear();
-    std::vector<Point3dW> derivatives(derivative + 1);
-    std::vector<Point3dW> ders = BSplineCurve::ComputeDerivatives(degree, derivative, knotVector, paramT, controlPoints);
-
-    std::vector<Point3dW> Aders(derivative + 1);
-    for (int i = 0; i < ders.size(); i++)
+    int n = m_controlPoints.size() - 1;
+    for(double st = 0.0;st <= 1.0;st += m_step)
     {
-        Aders[i] = ders[i];
-    }
-    std::vector<double> wders(derivative + 1);
-    for (int i = 0; i < ders.size(); i++)
-    {
-        wders[i] = ders[i].GetW();
-    }
-
-    for (int k = 0; k <= derivative; k++)
-    {
-        Point3dW v = Aders[k];
-        for (int i = 1; i <= k; i++)
+        Point3dW p(0,0,0,0);
+        int spanIndex = CurveUtil::FindSpan(m_degree,m_knots,st);
+        std::vector<double> BasicValue = CurveUtil::BasicFunctions(spanIndex,m_degree,m_knots,st);
+        for (unsigned int j = 0; j <= m_degree; j++)
         {
-            v = v - derivatives[k - i] * MathUtil::Binomial(k, i) * wders[i];
+            auto testp = m_controlPoints[spanIndex - m_degree + j];
+            auto tb = BasicValue[j];
+            p += m_controlPoints[spanIndex - m_degree + j] * BasicValue[j];
+            auto d = p;
         }
-        derivatives[k] = v/wders[0];
-        m_curvePoints.push_back(derivatives[k]);
+        m_curvePoints.push_back(p);
     }
-    return derivatives;
 }
+
 
 void xnurbs::draw()
 {

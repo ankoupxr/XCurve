@@ -13,15 +13,23 @@ class xnurbs : xcurve
 {
 public:
     xnurbs();
-    xnurbs(std::vector<std::vector<Point3dW>> controlPoints,std::vector<float> knots);
+    xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree,double paramT);
     ~xnurbs();
     void draw();
     std::vector<Point3dW> ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints);
+    void SetDegree(int degree){
+        m_degree = degree;
+    };
+    void SetParamT(double paramT){
+        m_paramT = paramT;
+    };
+    void ComputeRationalCurve();
 private:
-    std::vector<std::vector<Point3dW>> m_controlPoints;
-    float*** m_glcontrolPoints;
-    std::vector<float> m_knots;
-    float* m_glknots;
+    std::vector<Point3dW> m_controlPoints;
+    std::vector<double> m_knots;
+    int m_degree;
+    double m_paramT;
+    double m_step=0.01;
     std::vector<Point3dW> m_curvePoints;
 };
 

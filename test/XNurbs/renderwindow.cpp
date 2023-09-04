@@ -53,8 +53,6 @@ void renderwindow::paintGL()
     glColor3f(0.0, 0.0, 0.0);
     glPointSize(10.0f);
 
-    xnurbs m_test;
-    //m_test->draw();
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
@@ -66,10 +64,10 @@ void renderwindow::paintGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LINE_SMOOTH);
 
-    std::vector<Point3dW> cps1 = { Point3dW(100,0,0,1),  Point3dW(100,100,0,1),  Point3dW(0,100,0,2)};
+    std::vector<Point3dW> cps1 = { Point3dW(200,100,0,0),  Point3dW(200,200,0,0),  Point3dW(100,200,0,0)};
     std::vector<double> kv1 = { 0,0,0,1,1,1 };
-    xnurbs test;
-    test.ComputeRationalCurveDerivs(2,2,kv1,0.0,cps1);
+    xnurbs test(cps1,kv1,2,2);
+    test.ComputeRationalCurve();
     test.draw();
 
 
