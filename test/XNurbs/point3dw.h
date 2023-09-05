@@ -103,7 +103,7 @@ public:
         return Point3dW(m_coord(0), m_coord(1), m_coord(2) , m_coord(3));;
     }
 
-    Point3dW operator/(const double& v)
+    Point3dW operator/=(const double& v)
     {
         return Point3dW(m_coord(0) / v, m_coord(1) / v, m_coord(2) / v, m_coord(3));
     }

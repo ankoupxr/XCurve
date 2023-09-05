@@ -13,7 +13,7 @@ class xnurbs : xcurve
 {
 public:
     xnurbs();
-    xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree,double paramT);
+    xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree);
     ~xnurbs();
     void draw();
     std::vector<Point3dW> ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints);

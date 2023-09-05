@@ -43,7 +43,7 @@ void renderwindow::paintGL()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    glTranslatef(trax - width() / 2, tray - height() / 2, tra);
+    glTranslatef(trax, tray, tra);
     gluLookAt(0,0,0.0,0.0,0.0,1.0,0.0,-1.0,0.0);
 
     glRotatef(xRot, 1.0, 0.0, 0.0);
@@ -64,30 +64,33 @@ void renderwindow::paintGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LINE_SMOOTH);
 
-    std::vector<Point3dW> cps1 = { Point3dW(200,100,0,0),  Point3dW(200,200,0,0),  Point3dW(100,200,0,0)};
-    std::vector<double> kv1 = { 0,0,0,1,1,1 };
-    xnurbs test(cps1,kv1,2,2);
+//    std::vector<Point3dW> cps1 = { Point3dW(60, 100, 0,1),  Point3dW(20, 150, 10,1),
+//                                  Point3dW(80, 200, 30,1),Point3dW(100, 100, 30,1),Point3dW(60,100,10,1),Point3dW(60,100,0,1)};
+    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
+                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),Point3dW(500,-100,0,1)};
+    std::vector<double> kv1 = { 0,0,0,1,2,3,3,3 };
+    xnurbs test(cps1,kv1,2);
     test.ComputeRationalCurve();
     test.draw();
 
 
 
 
-    glColor3f(0.0,0.0,1.0);
-    glBegin(GL_LINES);
-    glVertex3f(100.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glEnd();
-    glColor3f(1.0,0.0,0.0);
-    glBegin(GL_LINES);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 100.0, 0.0);
-    glEnd();
-    glColor3f(0.0,1.0,0.0);
-    glBegin(GL_LINES);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 100.0);
-    glEnd();
+//    glColor3f(0.0,0.0,1.0);
+//    glBegin(GL_LINES);
+//    glVertex3f(100.0, 0.0, 0.0);
+//    glVertex3f(0.0, 0.0, 0.0);
+//    glEnd();
+//    glColor3f(1.0,0.0,0.0);
+//    glBegin(GL_LINES);
+//    glVertex3f(0.0, 0.0, 0.0);
+//    glVertex3f(0.0, 100.0, 0.0);
+//    glEnd();
+//    glColor3f(0.0,1.0,0.0);
+//    glBegin(GL_LINES);
+//    glVertex3f(0.0, 0.0, 0.0);
+//    glVertex3f(0.0, 0.0, 100.0);
+//    glEnd();
 }
 
 //鼠标点击事件

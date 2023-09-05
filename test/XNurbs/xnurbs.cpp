@@ -6,12 +6,11 @@ xnurbs::xnurbs()
 
 }
 
-xnurbs::xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree,double paramT)
+xnurbs::xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree)
 {
     this->m_controlPoints = controlPoints;
     this->m_knots = knots;
     this->m_degree = degree;
-    this->m_paramT = paramT;
 }
 
 xnurbs::~xnurbs()
@@ -22,18 +21,19 @@ void xnurbs::ComputeRationalCurve()
 {
     m_curvePoints.clear();
     int n = m_controlPoints.size() - 1;
-    for(double st = 0.0;st <= 1.0;st += m_step)
+    for(double u = 0;u<=1;u += m_step)
     {
-        Point3dW p(0,0,0,0);
-        int spanIndex = CurveUtil::FindSpan(m_degree,m_knots,st);
-        std::vector<double> BasicValue = CurveUtil::BasicFunctions(spanIndex,m_degree,m_knots,st);
-        for (unsigned int j = 0; j <= m_degree; j++)
+        Point3dW p(0,0,0,1);
+        double denominator = 0.0;
+        for (int i = 0; i <= n; i++)
         {
-            auto testp = m_controlPoints[spanIndex - m_degree + j];
-            auto tb = BasicValue[j];
-            p += m_controlPoints[spanIndex - m_degree + j] * BasicValue[j];
-            auto d = p;
+            double factor = CurveUtil::BasicFunctions(i, m_degree, m_knots,u) * m_controlPoints[i].GetW();
+            denominator += factor;
+            p.SetX(p.GetX()+m_controlPoints[i].GetX() * factor);
+            p.SetY(p.GetY()+m_controlPoints[i].GetY() * factor);
+            p.SetZ(p.GetZ()+m_controlPoints[i].GetZ() * factor);
         }
+        p /= denominator;
         m_curvePoints.push_back(p);
     }
 }

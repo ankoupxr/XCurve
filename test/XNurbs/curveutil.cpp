@@ -24,31 +24,35 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
 }
 
 
-std::vector<double> CurveUtil::BasicFunctions(int spanIndex,int degree,std::vector<double>& knotVector,double t)
+double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
 {
-    std::vector<double> basicFunctions(degree + 1);
-    basicFunctions[0] = 1.0;
-
-    std::vector<double> left(degree + 1);
-    std::vector<double> right(degree+1);
-
-    for (int j = 1; j <= degree; j++)
+    double x1,x2,y1,y2;
+    x1=0;x2=0;y1=0;y2=0;
+    if (k==0)									//若阶数为1
     {
-        left[j] = t - knotVector[spanIndex + 1 - j];
-        right[j] = knotVector[spanIndex + j] - t;
-
-        double saved = 0.0;
-
-        for (int r = 0; r < j; r++)
-        {
-            double temp = basicFunctions[r] / (right[r + 1] + left[j - r]);
-            basicFunctions[r] = saved + right[r + 1] * temp;
-            saved = left[j - r] * temp;
-        }
-        basicFunctions[j] = saved;
+        if ((u>knot[i])&&(u<=knot[i+1]))		//若参数u落在[ui,ui+1]节点区间内
+            return 1;
+        else
+            return 0;
     }
-    return basicFunctions;
-
+    else if(k>0)								//若阶数大于1
+    {
+        if (knot[i+k]!=knot[i])					//若ui+k-1与ui为非重节点
+        {
+            x1=BasicFunctions(i,k-1,knot,u);
+            x2=(u-knot[i])*x1/(knot[i+k]-knot[i]);	//计算B样条基函数递归定义的第一项
+        } else if(knot[i+k]==knot[i])
+            x2=0;
+        if (knot[i+k+1]!=knot[i+1])
+        {
+            y1=BasicFunctions(i+1,k-1,knot,u);
+            y2=(knot[i+k+1]-u)*y1/(knot[i+k+1]-knot[i+1]);//计算B样条基函数递归定义的第二项
+        }
+        else if(knot[i+k+1]==knot[i+1])
+            y2=0;
+        return x2+y2;						//计算B样条基函数递归定义的第一项和第二项之和
+    }
+    return 1;
 }
 
 
