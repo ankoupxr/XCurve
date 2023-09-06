@@ -16,11 +16,12 @@
 #include <QStringList>
 #include <vector>
 #include <QFileDialog>
-#include <xnurbs.h>
+#include <xnurbscurve.h>
 #include <Eigen/Dense>
 #include <Eigen/Core>
 #include <point3dw.h>
 #include <xcurve.h>
+#include <xnurbssurface.h>
 
 namespace Ui {
 class renderwindow;
@@ -52,7 +53,6 @@ private:
     GLfloat tra, xRot, yRot, zRot; //控制缩放等的多个数值
     double trax, tray; //控制视景体平移的两个参量
     QPoint oldPoint; //当前鼠标点击的QPoint类型值
-    xnurbs* m_test;
     GLUnurbsObj* pNurb;
 };
 

@@ -1,23 +1,23 @@
 
-#include "xnurbs.h"
+#include "xnurbscurve.h"
 
-xnurbs::xnurbs()
+xnurbscurve::xnurbscurve()
 {
 
 }
 
-xnurbs::xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree)
+xnurbscurve::xnurbscurve(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree)
 {
     this->m_controlPoints = controlPoints;
     this->m_knots = knots;
     this->m_degree = degree;
 }
 
-xnurbs::~xnurbs()
+xnurbscurve::~xnurbscurve()
 {
 }
 
-void xnurbs::ComputeRationalCurve()
+void xnurbscurve::ComputeRationalCurve()
 {
     m_curvePoints.clear();
     int n = m_controlPoints.size() - 1;
@@ -33,13 +33,15 @@ void xnurbs::ComputeRationalCurve()
             p.SetY(p.GetY()+m_controlPoints[i].GetY() * factor);
             p.SetZ(p.GetZ()+m_controlPoints[i].GetZ() * factor);
         }
-        p /= denominator;
+        p.SetX(p.GetX()/denominator);
+        p.SetY(p.GetY()/denominator);
+        p.SetZ(p.GetZ()/denominator);
         m_curvePoints.push_back(p);
     }
 }
 
 
-void xnurbs::draw()
+void xnurbscurve::draw()
 {
     for(size_t i = 0;i < m_curvePoints.size()-1;i++)
     {

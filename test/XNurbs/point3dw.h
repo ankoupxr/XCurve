@@ -11,17 +11,17 @@ class Point3dW
 public:
     Point3dW()
     {
-        m_coord(0) = 0;
-        m_coord(1) = 0;
-        m_coord(2) = 0;
-        m_coord(3) = 0;
+        x = 0;
+        y = 0;
+        z = 0;
+        w = 0;
     }
-    Point3dW(double x, double y, double z,double w)
+    Point3dW(double _x, double _y, double _z,double _w)
     {
-        m_coord(0) = x;
-        m_coord(1) = y;
-        m_coord(2) = z;
-        m_coord(3) = w;
+        x = _x;
+        y = _y;
+        z = _z;
+        w = _w;
     }
 
     ~Point3dW()
@@ -29,91 +29,50 @@ public:
 
     }
 
-    void SetX(const double x)
+    void SetX(const double _x)
     {
-        m_coord(0) = x;
+        x = _x;
     }
 
-    void SetY(const double y)
+    void SetY(const double _y)
     {
-        m_coord(1) = y;
+        y = _y;
     }
 
-    void SetZ(const double z)
+    void SetZ(const double _z)
     {
-        m_coord(2) = z;
+        z = _z;
     }
+
+    void SetW(const double _w)
+    {
+       w = _w;
+    }
+
 
     double GetX()
     {
-        return m_coord(0);
+        return x;
     }
 
     double GetY()
     {
-        return m_coord(1);
+        return y;
     }
 
     double GetZ()
     {
-        return m_coord(2);
+        return z;
     }
 
     double GetW()
     {
-        return m_coord(3);
+        return w;
     }
 
-    Eigen::Vector4d Location()
-    {
-        return m_coord;
-    }
-
-    Point3dW operator*=(const double& v)const
-    {
-        return Point3dW(m_coord(0) * v, m_coord(1) * v, m_coord(2) * v, m_coord(3));
-    }
-
-
-    Point3dW operator+=(const double& v)
-    {
-        return Point3dW(m_coord(0) + v, m_coord(1) + v, m_coord(2) + v, m_coord(3));
-    }
-
-    Point3dW operator+=(const Point3dW& v)
-    {
-        auto location = v.m_coord;
-        m_coord(0) = m_coord(0) + location(0);
-        m_coord(1) = m_coord(1) + location(1);
-        m_coord(2) = m_coord(2) + location(2);
-        return Point3dW(m_coord(0), m_coord(1), m_coord(2) , m_coord(3));;
-    }
-
-    Point3dW operator-(const Point3dW& v)const
-    {
-        auto location = v.m_coord;
-        return Point3dW(m_coord(0) - v.m_coord.x(), m_coord(1) - v.m_coord.y(), m_coord(2)  - v.m_coord.z(), m_coord(3));
-    }
-
-     Point3dW operator*(const double& v)
-    {
-        m_coord(0) = m_coord(0) * v;
-        m_coord(1) = m_coord(1) * v;
-        m_coord(2) = m_coord(2) * v;
-        return Point3dW(m_coord(0), m_coord(1), m_coord(2) , m_coord(3));;
-    }
-
-    Point3dW operator/=(const double& v)
-    {
-        return Point3dW(m_coord(0) / v, m_coord(1) / v, m_coord(2) / v, m_coord(3));
-    }
-
-    void PrintCoordinates()
-    {
-        std::cout << "Coordinates: " << m_coord(0) << ", " << m_coord(1) << ", " << m_coord(2) << std::endl;
-    }
 
 private:
-    Eigen::Vector4d m_coord;
+    //Eigen::Vector4d m_coord;
+    double x,y,z,w;
 };
 #endif // Point3dW_H

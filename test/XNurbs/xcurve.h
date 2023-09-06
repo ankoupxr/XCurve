@@ -10,6 +10,7 @@ class xcurve
 public:
     xcurve();
     void drawline(Point3dW& start,Point3dW& end);
+    void drawline2(Point3dW& start,Point3dW& end);
 };
 
 #endif // XCURVE_H

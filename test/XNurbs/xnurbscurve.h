@@ -1,6 +1,6 @@
 
-#ifndef XNURBS_H
-#define XNURBS_H
+#ifndef XNURBSCURVE_H
+#define XNURBSCURVE_H
 
 #include <GL/glut.h>
 #include <point3dw.h>
@@ -9,12 +9,12 @@
 #include <bsplinecurve.h>
 #include <mathutil.h>
 
-class xnurbs : xcurve
+class xnurbscurve : xcurve
 {
 public:
-    xnurbs();
-    xnurbs(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree);
-    ~xnurbs();
+    xnurbscurve();
+    xnurbscurve(std::vector<Point3dW> controlPoints,std::vector<double> knots,int degree);
+    ~xnurbscurve();
     void draw();
     std::vector<Point3dW> ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints);
     void SetDegree(int degree){
@@ -33,4 +33,4 @@ private:
     std::vector<Point3dW> m_curvePoints;
 };
 
-#endif // XNURBS_H
+#endif // XNURBSCURVE_H
