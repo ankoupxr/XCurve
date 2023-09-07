@@ -29,7 +29,6 @@ void XNurbsSurface::ComputeNurbsSurface()
         GetKnotVector(m_v[i],i,n,q,false);
     }
 
-
     for (double u = 0.0;u <= 1.0;u += m_step)
     {
         for (double v = 0.0;v <= 1.0;v += m_step)
@@ -178,12 +177,33 @@ double XNurbsSurface::BasicFunction(double t,int i,int k,std::vector<double>& T)
 
 void XNurbsSurface::draw()
 {
-    for(size_t i = 0;i < m_uSurFacePoint.size()-1;i++)
+    Point3dW temp,base;
+    int i = 0;
+    for (double v = 0.0;v <= 1.0;v += m_step)
     {
-        drawline(m_uSurFacePoint[i],m_uSurFacePoint[i+1]);
+        for (double u = 0.0;u <= 1.0;u += m_step)
+        {
+            temp = m_uSurFacePoint[i];
+            if(u != 0)
+            {
+                drawline(base,temp);
+            }
+            base = temp;
+            i++;
+        }
     }
-    for(size_t i = 0;i < m_vSurFacePoint.size()-1;i++)
+    int j = 0;
+    for (double u = 0.0;u <= 1.0;u += m_step)
     {
-        drawline(m_vSurFacePoint[i],m_vSurFacePoint[i+1]);
+        for (double v = 0.0;v <= 1.0;v += m_step)
+        {
+            temp = m_vSurFacePoint[j];
+            if(v != 0)
+            {
+                drawline(base,temp);
+            }
+            base = temp;
+            j++;
+        }
     }
 }

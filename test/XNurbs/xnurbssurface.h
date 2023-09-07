@@ -18,7 +18,7 @@ public:
 private:
     int m,p;
     int n,q;
-    double m_step = 0.1;
+    double m_step = 0.03;
     std::vector<std::vector<Point3dW>> m_controlPoints;
     std::vector<std::vector<double>> m_v;
     std::vector<std::vector<double>> m_u;

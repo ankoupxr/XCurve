@@ -64,12 +64,14 @@ void renderwindow::paintGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_LINE_SMOOTH);
 
-//    std::vector<Point3dW> cps1 = { Point3dW(60, 100, 0,1),  Point3dW(20, 150, 10,1),
-//                                  Point3dW(80, 200, 30,1),Point3dW(100, 100, 30,1),Point3dW(60,100,10,1),Point3dW(60,100,0,1)};
-//    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
-//                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),Point3dW(500,-100,0,1)};
-//    std::vector<double> kv1 = { 0,0,0,1,2,3,3,3 };
-//    xnurbscurve test(cps1,kv1,2);
+//    std::vector<Point3dW> cps1 = { Point3dW(-280, 30, 0,1),  Point3dW(-250, 180, 0,2),
+//                                  Point3dW(0, 100, 0,2.0),Point3dW(-100, -100, 0,2.0),
+//                                  Point3dW(250,-100,0,2.0),Point3dW(130,120,0,2.0),
+//                                  Point3dW(250,160,0,1)};
+////    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
+////                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),Point3dW(500,-100,0,1)};
+//    std::vector<double> knot(11);
+//    xnurbscurve test(cps1,knot,3);
 //    test.ComputeRationalCurve();
 //    test.draw();
 
