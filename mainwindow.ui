@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1249</width>
-    <height>680</height>
+    <width>1253</width>
+    <height>665</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,62 +20,38 @@
    <widget class="QWidget" name="LM" native="true">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>9</y>
-      <width>221</width>
+      <x>1070</x>
+      <y>10</y>
+      <width>181</width>
       <height>621</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="readBtn">
+    <widget class="QTreeWidget" name="GemTree">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>10</x>
        <y>20</y>
-       <width>75</width>
-       <height>31</height>
+       <width>161</width>
+       <height>231</height>
       </rect>
      </property>
-     <property name="text">
-      <string>读取文件</string>
-     </property>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
     </widget>
-    <widget class="QPushButton" name="drawBtn">
+    <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>70</y>
-       <width>75</width>
+       <x>20</x>
+       <y>275</y>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>绘制曲面</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="addBtn">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>120</y>
-       <width>75</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>插入节点</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>170</y>
-       <width>75</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>删除节点</string>
+      <string>Type:</string>
      </property>
     </widget>
    </widget>
@@ -84,7 +60,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>1001</width>
+      <width>1061</width>
       <height>621</height>
      </rect>
     </property>
@@ -95,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1249</width>
+     <width>1253</width>
      <height>22</height>
     </rect>
    </property>
@@ -117,6 +93,7 @@ color: rgb(238, 238, 236);</string>
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionCloudPointToNurbs"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -129,6 +106,11 @@ color: rgb(238, 238, 236);</string>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionCloudPointToNurbs">
+   <property name="text">
+    <string>CloudPointToNurbs</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

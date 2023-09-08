@@ -10,6 +10,8 @@ renderwindow::renderwindow(QWidget *parent) :
     oldPoint = QPoint(0, 0);
     trax = 0, tray = 0;
 
+    test = new Mesh();
+    test->ReadObj("G:/pxr/opencode/XCurve/data/test.obj");
     ui->setupUi(this);
 }
 
@@ -68,8 +70,8 @@ void renderwindow::paintGL()
 //                                  Point3dW(0, 100, 0,2.0),Point3dW(-100, -100, 0,2.0),
 //                                  Point3dW(250,-100,0,2.0),Point3dW(130,120,0,2.0),
 //                                  Point3dW(250,160,0,1)};
-////    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
-////                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),Point3dW(500,-100,0,1)};
+//    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
+//                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),Point3dW(500,-100,0,1)};
 //    std::vector<double> knot(11);
 //    xnurbscurve test(cps1,knot,3);
 //    test.ComputeRationalCurve();
@@ -83,25 +85,27 @@ void renderwindow::paintGL()
 //        {Point3dW(390, 50, 150,1),Point3dW(288, 162, 50,1),  Point3dW(172, 208, 0,1),Point3dW(48, 201, -70,1),Point3dW(-8, 200, 50,1)}
 //    };
 
-    std::vector<std::vector<Point3dW>> cps1 ={
-        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},
-        {Point3dW(0,100,200,1),Point3dW(100,100,300,1),  Point3dW(200,100,300,1),Point3dW(300,100,300,1),Point3dW(400,100,200,1)},
-        {Point3dW(0,200,200,1),Point3dW(100,200,300,1),  Point3dW(200,200,350,1),Point3dW(300,200,300,1),Point3dW(400,200,200,1)},
-        {Point3dW(0,300,200,1),Point3dW(100,300,300,1),  Point3dW(200,300,300,1),Point3dW(300,300,300,1),Point3dW(400,300,200,1)},
-        {Point3dW(0, 400, 100,1),Point3dW(100, 400, 200,1),  Point3dW(200, 400, 200,1),Point3dW(300, 400, 200,1),Point3dW(400, 400, 100,1)}
-    };
+//    std::vector<std::vector<Point3dW>> cps1 ={
+//        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},
+//        {Point3dW(0,100,200,1),Point3dW(100,100,300,1),  Point3dW(200,100,300,1),Point3dW(300,100,300,1),Point3dW(400,100,200,1)},
+//        {Point3dW(0,200,200,1),Point3dW(100,200,300,1),  Point3dW(200,200,350,1),Point3dW(300,200,300,1),Point3dW(400,200,200,1)},
+//        {Point3dW(0,300,200,1),Point3dW(100,300,300,1),  Point3dW(200,300,300,1),Point3dW(300,300,300,1),Point3dW(400,300,200,1)},
+//        {Point3dW(0, 400, 100,1),Point3dW(100, 400, 200,1),  Point3dW(200, 400, 200,1),Point3dW(300, 400, 200,1),Point3dW(400, 400, 100,1)}
+//    };
 
-    std::vector<std::vector<double>> u(5);
-    std::vector<std::vector<double>> v(5);
-    for(int i=0;i<5;i++)
-    {
-        u[i].resize(4+3+2);
-                v[i].resize(4+3+2);
-    }
+//    std::vector<std::vector<double>> u(5);
+//    std::vector<std::vector<double>> v(5);
+//    for(int i=0;i<5;i++)
+//    {
+//        u[i].resize(4+3+2);
+//                v[i].resize(4+3+2);
+//    }
 
-    XNurbsSurface test(cps1,v,u,4,4);
-    test.ComputeNurbsSurface();
-    test.draw();
+//    XNurbsSurface test(cps1,v,u,4,4);
+//    test.ComputeNurbsSurface();
+//    test.draw();
+
+    test->draw();
 
 //    glColor3f(0.0,0.0,1.0);
 //    glBegin(GL_LINES);

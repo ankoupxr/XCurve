@@ -22,6 +22,7 @@
 #include <point3dw.h>
 #include <xcurve.h>
 #include <xnurbssurface.h>
+#include <mesh.h>
 
 namespace Ui {
 class renderwindow;
@@ -54,6 +55,7 @@ private:
     double trax, tray; //控制视景体平移的两个参量
     QPoint oldPoint; //当前鼠标点击的QPoint类型值
     GLUnurbsObj* pNurb;
+    Mesh* test;
 };
 
 #endif // RENDERWINDOW_H

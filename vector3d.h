@@ -24,9 +24,9 @@ public:
     Vector3d  operator -  (const Vector3d &v) const { return Vector3d(x-v.x, y-v.y, z-v.z); }
     Vector3d& operator -= (const Vector3d &v)       { x-=v.x; y-=v.y; z-=v.z; return *this; }
     Vector3d  operator *  (double s) const              { return Vector3d(x*s, y*s, z*s); }
-    Vector3d& operator *= (float s)                { x*=s; y*=s; z*=s; return *this; }
-    Vector3d  operator /  (float s) const          { return (*this)* (1/s); }
-    Vector3d& operator /= (float s)                { return (*this)*=(1/s); }
+    Vector3d& operator *= (double s)                { x*=s; y*=s; z*=s; return *this; }
+    Vector3d  operator /  (double s) const          { return (*this)* (1/s); }
+    Vector3d& operator /= (double s)                { return (*this)*=(1/s); }
 
 private:
     double x,y,z;

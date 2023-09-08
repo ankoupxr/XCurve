@@ -15,18 +15,21 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mathutil.cpp \
+    mesh.cpp \
     plane.cpp \
     renderwindow.cpp \
     xcurve.cpp \
     xnurbscircle.cpp \
     xnurbscurve.cpp \
-    xnurbssurface.cpp
+    xnurbssurface.cpp \
+    xnurbssurfacefit.cpp
 
 HEADERS += \
     bsplinecurve.h \
     curveutil.h \
     mainwindow.h \
     mathutil.h \
+    mesh.h \
     plane.h \
     point3d.h \
     point3dw.h \
@@ -35,7 +38,8 @@ HEADERS += \
     xcurve.h \
     xnurbscircle.h \
     xnurbscurve.h \
-    xnurbssurface.h
+    xnurbssurface.h \
+    xnurbssurfacefit.h
 
 FORMS += \
     mainwindow.ui \
@@ -47,3 +51,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 LIBS += F:/QT15/5.15.2/msvc2019_64/lib/freeglut.lib
+
+DISTFILES += \
+    line.frag \
+    line.vert
