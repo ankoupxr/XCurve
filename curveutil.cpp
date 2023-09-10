@@ -26,8 +26,7 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
 
 double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
 {
-    double x1,x2,y1,y2;
-    x1=0;x2=0;y1=0;y2=0;
+    double value,value1,value2;
     if (k==0)									//若阶数为1
     {
         if ((u>knot[i])&&(u<=knot[i+1]))		//若参数u落在[ui,ui+1]节点区间内
@@ -37,22 +36,39 @@ double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
     }
     else if(k>0)								//若阶数大于1
     {
-        if (knot[i+k]!=knot[i])					//若ui+k-1与ui为非重节点
+        if(u < knot[i] || u > knot[i+k+1])
         {
-            x1=BasicFunctions(i,k-1,knot,u);
-            x2=(u-knot[i])*x1/(knot[i+k]-knot[i]);	//计算B样条基函数递归定义的第一项
-        } else if(knot[i+k]==knot[i])
-            x2=0;
-        if (knot[i+k+1]!=knot[i+1])
-        {
-            y1=BasicFunctions(i+1,k-1,knot,u);
-            y2=(knot[i+k+1]-u)*y1/(knot[i+k+1]-knot[i+1]);//计算B样条基函数递归定义的第二项
+            return 0;
         }
-        else if(knot[i+k+1]==knot[i+1])
-            y2=0;
-        return x2+y2;						//计算B样条基函数递归定义的第一项和第二项之和
+        else
+        {
+            double coffcient1,coffcient2;
+            double denominator = 0.0;
+            denominator = knot[i+k] - knot[i];
+            if(denominator == 0.0)
+            {
+                coffcient1 = 0;
+            }
+            else
+            {
+                coffcient1 = (u - knot[i]);
+            }
+
+            denominator = knot[i+k+1] - knot[i+1];
+            if(denominator == 0)
+            {
+                coffcient2 =0.0;
+            }
+            else
+            {
+                coffcient2 = (knot[i+k+1]-u)/denominator;
+            }
+            value1 = coffcient1 * BasicFunctions(i,k-1,knot,u);
+            value2 = coffcient2 * BasicFunctions(i+1,k-1,knot,u);
+            value = value1 + value2;
+        }
     }
-    return 1;
+    return value;
 }
 
 

@@ -10,8 +10,13 @@ renderwindow::renderwindow(QWidget *parent) :
     oldPoint = QPoint(0, 0);
     trax = 0, tray = 0;
 
-    test = new Mesh();
-    test->ReadObj("G:/pxr/opencode/XCurve/data/test.obj");
+    Point3d p;
+    Vector3d X(1000,0,0);
+    Vector3d Y (0,1000,0);
+    test = new xnurbscircle (p,X,Y,1000,0,360);
+
+    //test = new Mesh();
+    //test->ReadObj("G:/pxr/opencode/XCurve/data/test.obj");
     ui->setupUi(this);
 }
 
@@ -105,7 +110,10 @@ void renderwindow::paintGL()
 //    test.ComputeNurbsSurface();
 //    test.draw();
 
-    test->draw();
+
+    test->drawCircle();
+
+//    test->draw();
 
 //    glColor3f(0.0,0.0,1.0);
 //    glBegin(GL_LINES);

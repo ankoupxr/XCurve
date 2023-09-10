@@ -1,10 +1,8 @@
 #ifndef Point3d_H
 #define Point3d_H
 
-#include <Eigen/Dense>
-#include <Eigen/Core>
 #include <iostream>
-
+#include <vector3d.h>>
 
 class Point3d
 {
@@ -69,7 +67,7 @@ public:
     Point3d& operator *= (double s)                { x*=s; y*=s; z*=s; return *this; }
     Point3d  operator /  (double s) const          { return (*this)* (1/s); }
     Point3d& operator /= (double s)                { return (*this)*=(1/s); }
-
+    Point3d operator + (const Vector3d &v) {return Point3d(x+v.X(), y+v.Y(), v.Z()+z);};
 
 private:
     //Eigen::Vector4d m_coord;

@@ -20,7 +20,7 @@ public:
     void GetKnotVector();//获取节点矢量
     void KnotInsert();
     void ComputeRationalCurve();
-private:
+protected:
     std::vector<Point3dW> m_controlPoints;
     std::vector<double> m_knots;
     int k;

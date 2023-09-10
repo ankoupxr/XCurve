@@ -56,25 +56,28 @@ void xnurbscurve::GetKnotVector()
 
 void xnurbscurve::ComputeRationalCurve()
 {
-    GetKnotVector();
+    //GetKnotVector();
     m_curvePoints.clear();
-    int n = m_controlPoints.size() - 1;
-    for(double u = 0;u<=1;u += m_step)
+    n = m_controlPoints.size() - 1;
+    for(int i = 0;i<=n-k;i++)
     {
-        Point3dW p(0,0,0,1);
-        double denominator = 0.0;
-        for (int i = 0; i <= n; i++)
+        for(double t = m_knots[i+k];t <= m_knots[i+k+1];t+=m_step)
         {
-            double factor = CurveUtil::BasicFunctions(i, k, m_knots,u) * m_controlPoints[i].GetW();
-            denominator += factor;
-            p.SetX(p.GetX()+m_controlPoints[i].GetX() * factor);
-            p.SetY(p.GetY()+m_controlPoints[i].GetY() * factor);
-            p.SetZ(p.GetZ()+m_controlPoints[i].GetZ() * factor);
+            Point3dW p(0,0,0,0);
+            double denominator = 0.0;
+            for(int j = i;j <= i+k;j++)
+            {
+                double BValue = CurveUtil::BasicFunctions(i, k, m_knots,t);
+                p.SetX(p.GetX()+m_controlPoints[j].GetX()*m_controlPoints[j].GetW());
+                p.SetY(p.GetY()+m_controlPoints[j].GetY()*m_controlPoints[j].GetW());
+                p.SetX(p.GetZ()+m_controlPoints[j].GetZ()*m_controlPoints[j].GetW());
+                denominator += BValue * m_controlPoints[j].GetW();
+            }
+            p.SetX(p.GetX()/denominator);
+            p.SetY(p.GetY()/denominator);
+            p.SetX(p.GetZ()/denominator);
+            m_curvePoints.push_back(p);
         }
-        p.SetX(p.GetX()/denominator);
-        p.SetY(p.GetY()/denominator);
-        p.SetZ(p.GetZ()/denominator);
-        m_curvePoints.push_back(p);
     }
 }
 

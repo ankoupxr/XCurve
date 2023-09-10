@@ -18,6 +18,10 @@ public:
     double Norm        () const { return sqrt(NormSquared()); };
     double NormSquared() const {return x*x+y*y+z*z;};
 
+    double X() const {return x;};
+    double Y() const {return y;};
+    double Z() const {return z;};
+
     Vector3d  operator +  (const Vector3d &v) const { return Vector3d(x+v.x, y+v.y, z+v.z); }
     Vector3d& operator += (const Vector3d &v)       { x+=v.x; y+=v.y; z+=v.z; return *this; }
     Vector3d  operator -  () const                 { return Vector3d(-x, -y, -z); }
