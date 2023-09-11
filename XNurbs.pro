@@ -16,6 +16,7 @@ SOURCES += \
     mainwindow.cpp \
     mathutil.cpp \
     mesh.cpp \
+    painterwindow.cpp \
     plane.cpp \
     renderwindow.cpp \
     xcurve.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     mainwindow.h \
     mathutil.h \
     mesh.h \
+    painterwindow.h \
     plane.h \
     point3d.h \
     point3dw.h \
@@ -43,6 +45,7 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
+    painterwindow.ui \
     renderwindow.ui
 
 # Default rules for deployment.

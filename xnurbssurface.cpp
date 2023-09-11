@@ -20,21 +20,13 @@ XNurbsSurface::~XNurbsSurface()
 
 void XNurbsSurface::ComputeNurbsSurface()
 {
-    for (int i = 0; i < n + 1; i++)
-    {
-        GetKnotVector(m_u[i],i,m,p,true);
-    }
-    for (int i = 0; i < m + 1; i++)
-    {
-        GetKnotVector(m_v[i],i,n,q,false);
-    }
 
     for (double u = 0.0;u <= 1.0;u += m_step)
     {
         for (double v = 0.0;v <= 1.0;v += m_step)
         {
             Point3d point(0,0,0);
-             double weight = 0.0;
+            double weight = 0.0;
             for (int i = 0;i < n + 1;i++)
             {
                 for (int j = 0; j < m + 1; j++)
@@ -77,6 +69,18 @@ void XNurbsSurface::ComputeNurbsSurface()
             point.SetZ(point.GetZ()/weight);
             m_vSurFacePoint.push_back(point);
         }
+    }
+}
+
+void XNurbsSurface::GetALLKnotVector()
+{
+    for (int i = 0; i < n + 1; i++)
+    {
+        GetKnotVector(m_u[i],i,m,p,true);
+    }
+    for (int i = 0; i < m + 1; i++)
+    {
+        GetKnotVector(m_v[i],i,n,q,false);
     }
 }
 

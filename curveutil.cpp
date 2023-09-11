@@ -24,53 +24,41 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
 }
 
 
-double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double t)
+double CurveUtil::BasicFunctions(double t,int i,int k,std::vector<double>& T)
 {
-    double value,value1,value2;
-    if (k==0)									//若阶数为1
+    double value1,value2,value;
+    if(k==0)
     {
-        if ((t>knot[i])&&(t<=knot[i+1]))		//若参数u落在[ui,ui+1]节点区间内
-            return 1;
+        if(t>=T[i] && t<T[i+1])
+            return 1.0;
         else
-            return 0;
+            return 0.0;
     }
-    else if(k>0)								//若阶数大于1
+    if(k>0)
     {
-        if(t < knot[i] || t > knot[i+k+1])
-        {
-            return 0;
-        }
+        if(t<T[i]||t>T[i+k+1])
+            return 0.0;
         else
         {
-            double coffcient1,coffcient2;
-            double denominator = 0.0;
-            denominator = knot[i+k] - knot[i];
-            if(denominator == 0.0)
-            {
-                coffcient1 = 0;
-            }
+            double coffcient1,coffcient2;//凸组合系数1，凸组合系数2
+            double denominator=0.0;//分母
+            denominator=T[i+k]-T[i];//递推公式第一项分母
+            if(denominator==0.0)//约定0/0
+                coffcient1=0.0;
             else
-            {
-                coffcient1 = (t - knot[i]);
-            }
-
-            denominator = knot[i+k+1] - knot[i+1];
-            if(denominator == 0)
-            {
-                coffcient2 =0.0;
-            }
+                coffcient1=(t-T[i])/denominator;
+            denominator=T[i+k+1]-T[i+1];//递推公式第二项分母
+            if(0.0==denominator)//约定0/0
+                coffcient2=0.0;
             else
-            {
-                coffcient2 = (knot[i+k+1]-t)/denominator;
-            }
-            value1 = coffcient1 * BasicFunctions(i,k-1,knot,t);
-            value2 = coffcient2 * BasicFunctions(i+1,k-1,knot,t);
-            value = value1 + value2;
+                coffcient2=(T[i+k+1]-t)/denominator;
+            value1=coffcient1*BasicFunctions(t,i,k-1,T);//递推公式第一项的值
+            value2=coffcient2*BasicFunctions(t,i+1,k-1,T);//递推公式第二项的值
+            value=value1+value2;//基函数的值
         }
     }
     return value;
 }
-
 
 std::vector<std::vector<double>> CurveUtil::BasisFunctionsDerivs(int spanIndex, int degree,  int derivative, const std::vector<double>& knotVector, double paramT)
 {

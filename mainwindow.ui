@@ -60,8 +60,18 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>1061</width>
+      <width>561</width>
       <height>621</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="painterwindow" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>10</y>
+      <width>481</width>
+      <height>611</height>
      </rect>
     </property>
    </widget>
@@ -117,6 +127,12 @@ color: rgb(238, 238, 236);</string>
    <class>renderwindow</class>
    <extends>QWidget</extends>
    <header>renderwindow.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>painterwindow</class>
+   <extends>QWidget</extends>
+   <header>painterwindow.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

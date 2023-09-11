@@ -85,36 +85,31 @@ void renderwindow::paintGL()
 //    test.draw();
 //    test.drawControl();
 
-//    std::vector<std::vector<Point3dW>> cps1 ={
-//        {Point3dW(82, -100, 200,1),Point3dW(-14, 65, 150,1),  Point3dW(-146, 94, 50,1),Point3dW(-254, 80, 0,1),Point3dW(-301, 40, 50,1)},
-//        {Point3dW(147, 68, 150,1),Point3dW(52, 117,100,1),  Point3dW(-68, 146, 50,1),Point3dW(-173, 135, -10,1),Point3dW(-238, 131, -10,1)},
-//        {Point3dW(227, 132, 140,1),Point3dW(125, 154, 80,1),  Point3dW(0, 178, 30,1),Point3dW(-109, 166, -50,1),Point3dW(-164, 174, 0,1)},
-//        {Point3dW(337, 131, 150,1),Point3dW(205, 173, 50,1),  Point3dW(75, 203, 0,1),Point3dW(-51, 188, -70,1),Point3dW(-116, 178, -100,1)},
-//        {Point3dW(390, 50, 150,1),Point3dW(288, 162, 50,1),  Point3dW(172, 208, 0,1),Point3dW(48, 201, -70,1),Point3dW(-8, 200, 50,1)}
-//    };
-
-//    std::vector<std::vector<Point3dW>> cps1 ={
-//        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},
-//        {Point3dW(0,100,200,1),Point3dW(100,100,300,1),  Point3dW(200,100,300,1),Point3dW(300,100,300,1),Point3dW(400,100,200,1)},
-//        {Point3dW(0,200,200,1),Point3dW(100,200,300,1),  Point3dW(200,200,350,1),Point3dW(300,200,300,1),Point3dW(400,200,200,1)},
-//        {Point3dW(0,300,200,1),Point3dW(100,300,300,1),  Point3dW(200,300,300,1),Point3dW(300,300,300,1),Point3dW(400,300,200,1)},
-//        {Point3dW(0, 400, 100,1),Point3dW(100, 400, 200,1),  Point3dW(200, 400, 200,1),Point3dW(300, 400, 200,1),Point3dW(400, 400, 100,1)}
-//    };
-
-//    std::vector<std::vector<double>> u(5);
-//    std::vector<std::vector<double>> v(5);
-//    for(int i=0;i<5;i++)
-//    {
-//        u[i].resize(4+3+2);
-//                v[i].resize(4+3+2);
-//    }
-
-//    XNurbsSurface test(cps1,v,u,4,4);
-//    test.ComputeNurbsSurface();
-//    test.draw();
+    std::vector<std::vector<Point3dW>> cps1 =
+    {
+        {Point3dW(82, -100, 200,1),Point3dW(-14, 65, 150,1),  Point3dW(-146, 94, 50,1),Point3dW(-254, 80, 0,1),Point3dW(-301, 40, 50,1)},
+        {Point3dW(147, 68, 150,1),Point3dW(52, 117,100,1),  Point3dW(-68, 146, 50,1),Point3dW(-173, 135, -10,1),Point3dW(-238, 131, -10,1)},
+        {Point3dW(227, 132, 140,1),Point3dW(125, 154, 80,1),  Point3dW(0, 178, 30,1),Point3dW(-109, 166, -50,1),Point3dW(-164, 174, 0,1)},
+        {Point3dW(337, 131, 150,1),Point3dW(205, 173, 50,1),  Point3dW(75, 203, 0,1),Point3dW(-51, 188, -70,1),Point3dW(-116, 178, -100,1)},
+        {Point3dW(390, 50, 150,1),Point3dW(288, 162, 50,1),  Point3dW(172, 208, 0,1),Point3dW(48, 201, -70,1),Point3dW(-8, 200, 50,1)}
+    };
 
 
-    test->drawCircle();
+    std::vector<std::vector<double>> u(5);
+    std::vector<std::vector<double>> v(5);
+    for(int i=0;i<5;i++)
+    {
+        u[i].resize(4+3+2);
+        v[i].resize(4+3+2);
+    }
+
+    XNurbsSurface test(cps1,v,u,4,4);
+    test.GetALLKnotVector();
+    test.ComputeNurbsSurface();
+    test.draw();
+
+
+ //   test->drawCircle();
 
 //    test->draw();
 

@@ -15,6 +15,18 @@ xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, doub
     }
     double theta = the - ths;
     int narcs;
+
+    double dtheta = (the-ths) * 3.1415926 / 180;
+    Point3dW p0(center.GetX() + r,center.GetY(),0,1);
+    Point3dW p1(center.GetX() + r,center.GetY() + r,0,cos(dtheta / 8));
+    Point3dW p2(center.GetX(),center.GetY() + r,0,1);
+    Point3dW p3(center.GetX() - r ,center.GetY() + r,0,cos(dtheta / 8));
+    Point3dW p4(center.GetX() - r,center.GetY(),0,1);
+    Point3dW p5(center.GetX() - r,center.GetY() - r,0,cos(dtheta / 8));
+    Point3dW p6(center.GetX() ,center.GetY()-r,0,1);
+    Point3dW p7(center.GetX() + r,center.GetY() - r,0,cos(dtheta / 8));
+    Point3dW p8(center.GetX() + r,center.GetY(),0,1);
+
     if (theta <= 90)
     {
         narcs = 1;
@@ -31,16 +43,6 @@ xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, doub
     {
         narcs = 4;
     }
-    double dtheta = (the-ths) * 3.1415926 / 180;
-    Point3dW p0(center.GetX() + r,center.GetY(),0,1);
-    Point3dW p1(center.GetX() + r,center.GetY() + r,0,cos(dtheta / 8));
-    Point3dW p2(center.GetX(),center.GetY() + r,0,1);
-    Point3dW p3(center.GetX() - r ,center.GetY() + r,0,cos(dtheta / 8));
-    Point3dW p4(center.GetX() - r,center.GetY(),0,1);
-    Point3dW p5(center.GetX() - r,center.GetY() - r,0,cos(dtheta / 8));
-    Point3dW p6(center.GetX() ,center.GetY()-r,0,1);
-    Point3dW p7(center.GetX() + r,center.GetY() - r,0,cos(dtheta / 8));
-    Point3dW p8(center.GetX() + r,center.GetY(),0,1);
 
     m_controlPoints.push_back(p0);
     m_controlPoints.push_back(p1);
@@ -83,5 +85,4 @@ xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, doub
 void xnurbscircle::drawCircle(){
     ComputeRationalCurve();
     draw();
-    drawControl();
 }

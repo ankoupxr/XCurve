@@ -21,6 +21,7 @@ public:
     void GetKnotVector();//获取节点矢量
     void KnotInsert();
     void ComputeRationalCurve();
+    void MakeRevolvedSurf(Point3d S,Vector3d T,double theta);
 protected:
     std::vector<Point3dW> m_controlPoints;
     std::vector<double> m_knots;

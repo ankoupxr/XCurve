@@ -22,6 +22,19 @@ public:
     double Y() const {return y;};
     double Z() const {return z;};
 
+    double dot(const Vector3d &v) const
+    {
+        return x * v.x + y * v.y + z * v.z;
+    }
+
+    Vector3d cross(const Vector3d &v) const
+    {
+        double newX = y * v.z - z * v.y;
+        double newY = z * v.x - x * v.z;
+        double newZ = x * v.y - y * v.x;
+        return Vector3d(newX, newY, newZ);
+    }
+
     Vector3d  operator +  (const Vector3d &v) const { return Vector3d(x+v.x, y+v.y, z+v.z); }
     Vector3d& operator += (const Vector3d &v)       { x+=v.x; y+=v.y; z+=v.z; return *this; }
     Vector3d  operator -  () const                 { return Vector3d(-x, -y, -z); }

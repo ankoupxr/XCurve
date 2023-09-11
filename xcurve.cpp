@@ -40,9 +40,9 @@ void xcurve::drawPoint(Point3d& start)
     glEnd();
 }
 
-void xcurve::drawline2(Point3d& start,Point3d& end)
+void xcurve::drawline2(Point3dW& start,Point3dW& end)
 {
-    glColor3f(0.0,0.0,255.0);
+    glColor3f(255.0,255.0,255.0);
     glBegin(GL_LINES);
     //glBegin(GL_POINTS);
     glVertex3f(start.GetX(), start.GetY(), start.GetZ());

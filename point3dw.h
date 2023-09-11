@@ -1,8 +1,7 @@
 #ifndef Point3dWW_H
 #define Point3dWW_H
 
-#include <Eigen/Dense>
-#include <Eigen/Core>
+#include <vector3d.h>
 #include <iostream>
 
 
@@ -69,7 +68,6 @@ public:
     {
         return w;
     }
-
 
 private:
     //Eigen::Vector4d m_coord;

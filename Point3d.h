@@ -67,7 +67,8 @@ public:
     Point3d& operator *= (double s)                { x*=s; y*=s; z*=s; return *this; }
     Point3d  operator /  (double s) const          { return (*this)* (1/s); }
     Point3d& operator /= (double s)                { return (*this)*=(1/s); }
-    Point3d operator + (const Vector3d &v) {return Point3d(x+v.X(), y+v.Y(), v.Z()+z);};
+    Point3d operator + (const Vector3d &v) {return Point3d(x+v.X(), y+v.Y(), v.Z()+z);}
+    //Vector3d operator -  (const Point3d &v) const { return Vector3d(x-v.X(), y-v.Y(), z-v.Z()); }
 
 private:
     //Eigen::Vector4d m_coord;
