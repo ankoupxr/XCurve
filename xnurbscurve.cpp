@@ -56,28 +56,23 @@ void xnurbscurve::GetKnotVector()
 
 void xnurbscurve::ComputeRationalCurve()
 {
-    //GetKnotVector();
     m_curvePoints.clear();
-    n = m_controlPoints.size() - 1;
-    for(int i = 0;i<=n-k;i++)
+    for(double t=0.0;t<=1.0;t+=m_step)
     {
-        for(double t = m_knots[i+k];t <= m_knots[i+k+1];t+=m_step)
+        Point3d p(0,0,0);
+        double denominator = 0.0;
+        for(int i=0;i<=n;i++)
         {
-            Point3dW p(0,0,0,0);
-            double denominator = 0.0;
-            for(int j = i;j <= i+k;j++)
-            {
-                double BValue = CurveUtil::BasicFunctions(i, k, m_knots,t);
-                p.SetX(p.GetX()+m_controlPoints[j].GetX()*m_controlPoints[j].GetW());
-                p.SetY(p.GetY()+m_controlPoints[j].GetY()*m_controlPoints[j].GetW());
-                p.SetX(p.GetZ()+m_controlPoints[j].GetZ()*m_controlPoints[j].GetW());
-                denominator += BValue * m_controlPoints[j].GetW();
-            }
-            p.SetX(p.GetX()/denominator);
-            p.SetY(p.GetY()/denominator);
-            p.SetX(p.GetZ()/denominator);
-            m_curvePoints.push_back(p);
+            double BValue = CurveUtil::BasicFunctions(i, k, m_knots,t);
+            p.SetX(p.GetX()+m_controlPoints[i].GetX()*m_controlPoints[i].GetW()*BValue);
+            p.SetY(p.GetY()+m_controlPoints[i].GetY()*m_controlPoints[i].GetW()*BValue);
+            p.SetZ(p.GetZ()+m_controlPoints[i].GetZ()*m_controlPoints[i].GetW()*BValue);
+            denominator += BValue * m_controlPoints[i].GetW();
         }
+        p.SetX(p.GetX()/denominator);
+        p.SetY(p.GetY()/denominator);
+        p.SetZ(p.GetZ()/denominator);
+        m_curvePoints.push_back(p);
     }
 }
 
@@ -87,5 +82,17 @@ void xnurbscurve::draw()
     for(size_t i = 0;i < m_curvePoints.size()-1;i++)
     {
         drawline(m_curvePoints[i],m_curvePoints[i+1]);
+    }
+}
+
+void xnurbscurve::drawControl()
+{
+    for(int i=0;i<=n;i++)
+    {
+        drawPoint(m_controlPoints[i]);
+        if(i+1 <= n)
+        {
+        drawline(m_controlPoints[i],m_controlPoints[i+1]);
+        }
     }
 }

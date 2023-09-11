@@ -24,19 +24,19 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
 }
 
 
-double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
+double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double t)
 {
     double value,value1,value2;
     if (k==0)									//若阶数为1
     {
-        if ((u>knot[i])&&(u<=knot[i+1]))		//若参数u落在[ui,ui+1]节点区间内
+        if ((t>knot[i])&&(t<=knot[i+1]))		//若参数u落在[ui,ui+1]节点区间内
             return 1;
         else
             return 0;
     }
     else if(k>0)								//若阶数大于1
     {
-        if(u < knot[i] || u > knot[i+k+1])
+        if(t < knot[i] || t > knot[i+k+1])
         {
             return 0;
         }
@@ -51,7 +51,7 @@ double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
             }
             else
             {
-                coffcient1 = (u - knot[i]);
+                coffcient1 = (t - knot[i]);
             }
 
             denominator = knot[i+k+1] - knot[i+1];
@@ -61,10 +61,10 @@ double CurveUtil::BasicFunctions(int i,int k,std::vector<double>& knot,double u)
             }
             else
             {
-                coffcient2 = (knot[i+k+1]-u)/denominator;
+                coffcient2 = (knot[i+k+1]-t)/denominator;
             }
-            value1 = coffcient1 * BasicFunctions(i,k-1,knot,u);
-            value2 = coffcient2 * BasicFunctions(i+1,k-1,knot,u);
+            value1 = coffcient1 * BasicFunctions(i,k-1,knot,t);
+            value2 = coffcient2 * BasicFunctions(i+1,k-1,knot,t);
             value = value1 + value2;
         }
     }

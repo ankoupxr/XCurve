@@ -33,22 +33,23 @@ void XNurbsSurface::ComputeNurbsSurface()
     {
         for (double v = 0.0;v <= 1.0;v += m_step)
         {
-            Point3dW point(0,0,0,1);
+            Point3d point(0,0,0);
+             double weight = 0.0;
             for (int i = 0;i < n + 1;i++)
             {
                 for (int j = 0; j < m + 1; j++)
                 {
                     double BasicU = BasicFunction(u,j,p,m_u[i]);
                     double BasicV = BasicFunction(v,i,q,m_v[j]);
-                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*point.GetW()*BasicU*BasicV);
-                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*point.GetW()*BasicU*BasicV);
-                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*point.GetW()*BasicU*BasicV);
-                    point.SetW(point.GetW()+m_controlPoints[i][j].GetW()*point.GetW()*BasicU*BasicV);
+                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    weight += m_controlPoints[i][j].GetW()*BasicU*BasicV;
                 }
             }
-            point.SetX(point.GetX()/point.GetW());
-            point.SetY(point.GetY()/point.GetW());
-            point.SetZ(point.GetZ()/point.GetW());
+            point.SetX(point.GetX()/weight);
+            point.SetY(point.GetY()/weight);
+            point.SetZ(point.GetZ()/weight);
             m_uSurFacePoint.push_back(point);
         }
     }
@@ -57,22 +58,23 @@ void XNurbsSurface::ComputeNurbsSurface()
     {
         for (double u = 0.0;u <= 1.0;u += m_step)
         {
-            Point3dW point(0,0,0,1);
+            Point3d point(0,0,0);
+            double weight = 0.0;
             for (int i = 0;i < n + 1;i++)
             {
                 for (int j = 0; j < m + 1; j++)
                 {
                     double BasicU = BasicFunction(u,j,p,m_u[i]);
                     double BasicV = BasicFunction(v,i,q,m_v[j]);
-                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*point.GetW()*BasicU*BasicV);
-                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*point.GetW()*BasicU*BasicV);
-                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*point.GetW()*BasicU*BasicV);
-                    point.SetW(point.GetW()+m_controlPoints[i][j].GetW()*point.GetW()*BasicU*BasicV);
+                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
+                    weight += m_controlPoints[i][j].GetW()*BasicU*BasicV;
                 }
             }
-            point.SetX(point.GetX()/point.GetW());
-            point.SetY(point.GetY()/point.GetW());
-            point.SetZ(point.GetZ()/point.GetW());
+            point.SetX(point.GetX()/weight);
+            point.SetY(point.GetY()/weight);
+            point.SetZ(point.GetZ()/weight);
             m_vSurFacePoint.push_back(point);
         }
     }
@@ -177,7 +179,7 @@ double XNurbsSurface::BasicFunction(double t,int i,int k,std::vector<double>& T)
 
 void XNurbsSurface::draw()
 {
-    Point3dW temp,base;
+    Point3d temp,base;
     int i = 0;
     for (double v = 0.0;v <= 1.0;v += m_step)
     {

@@ -8,6 +8,7 @@ xnurbscircle::xnurbscircle()
 
 xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, double ths, double the)
 {
+    k = 2;
     if (the < ths)
     {
         the = 360 + the;
@@ -51,7 +52,7 @@ xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, doub
     m_controlPoints.push_back(p7);
     m_controlPoints.push_back(p8);
 
-
+    n = 8;
 
     int j = 2 * narcs + 1;
     m_knots.resize(3 + j);
@@ -82,4 +83,5 @@ xnurbscircle::xnurbscircle(Point3d center,Vector3d X, Vector3d Y, double r, doub
 void xnurbscircle::drawCircle(){
     ComputeRationalCurve();
     draw();
+    drawControl();
 }

@@ -23,8 +23,8 @@ private:
     std::vector<std::vector<double>> m_v;
     std::vector<std::vector<double>> m_u;
     std::vector<double> m_weights;
-    std::vector<Point3dW> m_uSurFacePoint;
-    std::vector<Point3dW> m_vSurFacePoint;
+    std::vector<Point3d> m_uSurFacePoint;
+    std::vector<Point3d> m_vSurFacePoint;
 };
 
 #endif // XNURBSSURFACE_H
