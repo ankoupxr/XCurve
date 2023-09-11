@@ -2,7 +2,7 @@
 #define Point3d_H
 
 #include <iostream>
-#include <vector3d.h>>
+#include <vector3d.h>
 
 class Point3d
 {
@@ -42,20 +42,21 @@ public:
 
 
 
-    double GetX()
+    double GetX() const
     {
         return x;
     }
 
-    double GetY()
+    double GetY() const
     {
         return y;
     }
 
-    double GetZ()
+    double GetZ() const
     {
         return z;
     }
+
 
     Point3d  operator +  (const Point3d &v) const { return Point3d(x+v.x, y+v.y, z+v.z); }
     Point3d  operator +  (const double &v) const { return Point3d(x+v, y+v, z+v); }
@@ -68,7 +69,7 @@ public:
     Point3d  operator /  (double s) const          { return (*this)* (1/s); }
     Point3d& operator /= (double s)                { return (*this)*=(1/s); }
     Point3d operator + (const Vector3d &v) {return Point3d(x+v.X(), y+v.Y(), v.Z()+z);}
-    //Vector3d operator -  (const Point3d &v) const { return Vector3d(x-v.X(), y-v.Y(), z-v.Z()); }
+    Vector3d operator -  (const Point3d &v) { return Vector3d(x-v.GetX(), y-v.GetY(), z-v.GetZ()); }
 
 private:
     //Eigen::Vector4d m_coord;

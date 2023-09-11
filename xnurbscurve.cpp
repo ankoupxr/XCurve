@@ -98,7 +98,7 @@ void xnurbscurve::drawControl()
 }
 
 void xnurbscurve::MakeRevolvedSurf(Point3d S,Vector3d T,double theta)
-{/*
+{
     int narcs;
     std::vector<double> U(9);
     std::vector<std::vector<Point3dW>> scPoints;
@@ -137,25 +137,25 @@ void xnurbscurve::MakeRevolvedSurf(Point3d S,Vector3d T,double theta)
         angle = angle + dtheta;
         coses[i] = cos(angle);
         sines[i] = sin(angle);
-        scPoints[i-1].resize(m);
+        scPoints[i-1].resize(n);
     }
-    for(int j=0;j <= m;j++)
+    for(int j=0;j <= n;j++)
     {
-        Point3d O = MathUtil::PointToLine(S,T,m_controlPoints[j]);
-        Vector3d X = m_controlPoints[j] - O;
+        Point3d P = Point3d(m_controlPoints[j].GetX(),m_controlPoints[j].GetY(),m_controlPoints[j].GetZ());
+        Point3d O = MathUtil::PointToLine(S,T,P);
+        Vector3d X = P - O;
         double r = X.Norm();
         Vector3d Y = T.cross(X);
-        Point3dW P0 = m_controlPoints[j];
+        Point3d P0 = m_controlPoints[j].ToPoint3d();
         scPoints[0][j] = m_controlPoints[j];
         Vector3d T0 = Y;
         int index = 0;
         angle = 0.0;
         for(int i = 1;i <= narcs;i++)
         {
-            Point3dW P2 = O + r * coses[i] * X + r * sines[i] * Y;
-            P2.SetW(m_controlPoints[j].GetW());
-            scPoints[index+2][j] = P2;
-            Vector3d T2 = - sines[i] * X + coses[i] * Y;
+            Point3d P2 = O + X * r * coses[i] + Y * r * sines[i];
+            scPoints[index+2][j] = Point3dW(P2.GetX(),P2.GetY(),P2.GetZ(),m_controlPoints[j].GetW());
+            Vector3d T2 = X * (- sines[i])  + Y * coses[i];
             Point3d ins = MathUtil::Intersect3DLines(P0,T0,P2,T2);
             scPoints[index+1][j] = Point3dW(ins.GetX(),ins.GetY(),ins.GetZ(),wm*m_controlPoints[j].GetW());
             index = index + 2;
@@ -165,5 +165,5 @@ void xnurbscurve::MakeRevolvedSurf(Point3d S,Vector3d T,double theta)
                 T0 = T2;
             }
         }
-    }*/
+    }
 }
