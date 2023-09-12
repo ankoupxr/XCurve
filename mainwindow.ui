@@ -41,17 +41,72 @@
       </property>
      </column>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>275</y>
-       <width>131</width>
-       <height>31</height>
+       <x>10</x>
+       <y>310</y>
+       <width>101</width>
+       <height>24</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
      <property name="text">
-      <string>Type:</string>
+      <string>SelectFile</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>360</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
+     <property name="text">
+      <string>DrawSurface</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>410</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
+     <property name="text">
+      <string>EditSurface</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>450</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
+     <property name="text">
+      <string>EditCurve</string>
      </property>
     </widget>
    </widget>

@@ -60,6 +60,32 @@ double CurveUtil::BasicFunctions(double t,int i,int k,std::vector<double>& T)
     return value;
 }
 
+std::vector<double> CurveUtil::BasisFunctions(double t, int i, int k, std::vector<double> &T)
+{
+    std::vector<double> basisFunctions(k + 1);
+    basisFunctions[0] = 1.0;
+
+    std::vector<double> left(k + 1);
+    std::vector<double> right(k + 1);
+
+    for (int j = 1; j <= k; j++)
+    {
+        left[j] = t - T[i + 1 - j];
+        right[j] = T[i + j] - t;
+
+        double saved = 0.0;
+
+        for (int r = 0; r < j; r++)
+        {
+            double temp = basisFunctions[r] / (right[r + 1] + left[j - r]);
+            basisFunctions[r] = saved + right[r + 1] * temp;
+            saved = left[j - r] * temp;
+        }
+        basisFunctions[j] = saved;
+    }
+    return basisFunctions;
+}
+
 std::vector<std::vector<double>> CurveUtil::BasisFunctionsDerivs(int spanIndex, int degree,  int derivative, const std::vector<double>& knotVector, double paramT)
 {
     std::vector<std::vector<double>> derivatives(derivative + 1, std::vector<double>(degree + 1));

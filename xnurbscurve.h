@@ -7,6 +7,7 @@
 #include <vector>
 #include <xcurve.h>
 #include <bsplinecurve.h>
+#include <xnurbssurface.h>
 #include <mathutil.h>
 
 class xnurbscurve : xcurve

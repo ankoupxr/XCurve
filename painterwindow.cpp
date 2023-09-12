@@ -37,12 +37,8 @@ void painterwindow::paintGL()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    glTranslatef(trax, tray, tra);
-    gluLookAt(0,0,0.0,0.0,0.0,1.0,0.0,-1.0,0.0);
-
-    glRotatef(xRot, 1.0, 0.0, 0.0);
-    glRotatef(yRot, 0.0, 1.0, 0.0);
-    glRotatef(zRot, 0.0, 0.0, 1.0);
+    glTranslatef(0, 0, tra);
+    gluLookAt(0,0,1.0,0.0,0.0,0.0,0.0,1.0,0.0);
 
     glColor3f(0.0, 0.0, 0.0);
     glPointSize(10.0f);
@@ -62,18 +58,13 @@ void painterwindow::paintGL()
 
     glColor3f(0.0,0.0,1.0);
     glBegin(GL_LINES);
-    glVertex3f(100.0, 0.0, 0.0);
     glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(100.0, 0.0, 0.0);
     glEnd();
     glColor3f(1.0,0.0,0.0);
     glBegin(GL_LINES);
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(0.0, 100.0, 0.0);
-    glEnd();
-    glColor3f(0.0,1.0,0.0);
-    glBegin(GL_LINES);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 100.0);
     glEnd();
 
     if(point.size() > 0)
@@ -93,7 +84,14 @@ void painterwindow::paintGL()
 //鼠标点击事件
 void painterwindow::mousePressEvent(QMouseEvent *event) {
         oldPoint = event->pos();
-        point.push_back(Point3d(oldPoint.x(), oldPoint.y(), 0.0));
+        // 将鼠标点击事件的坐标转换为OpenGL坐标
+        double ox = this->width() / 2;
+        double oy = this->height() / 2;
+        double openglx = 0.0;
+        double opengly = 0.0;
+        openglx = (oldPoint.x() - ox);
+        opengly = -(oldPoint.y() - oy);
+        point.push_back(Point3d(openglx, opengly, 0.0));
         update();
 }
 

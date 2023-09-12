@@ -8,7 +8,7 @@
 class XNurbsSurfaceFit
 {
 public:
-    static void MeshToNurbs();
+    //static XNurbsSurface GlobalInterpolationSurf(std::vector<Point3d> points,int n,int m);
 };
 
 #endif // XNURBSSURFACEFIT_H

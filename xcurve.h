@@ -9,11 +9,10 @@ class xcurve
 {
 public:
     xcurve();
-    void drawline(Point3d& start,Point3d& end);
-    void drawline(Point3dW& start,Point3dW& end);
-    void drawPoint(Point3dW& start);
-    void drawPoint(Point3d& start);
-    void drawline2(Point3dW& start,Point3dW& end);
+    void drawline(Point3d start,Point3d end);
+    void drawline(Point3dW start,Point3dW end);
+    void drawPoint(Point3d start);
+    void drawline2(Point3dW start,Point3dW end);
 };
 
 #endif // XCURVE_H

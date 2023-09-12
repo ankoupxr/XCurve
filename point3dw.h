@@ -71,7 +71,7 @@ public:
     }
 
     Point3d ToPoint3d(){
-        return Point3d(x,y,z);
+        return Point3d(x/w,y/w,z/w);
     }
 
     Point3dW  operator +  (const Point3dW &v) const { return Point3dW(x+v.x, y+v.y, z+v.z,w); }
