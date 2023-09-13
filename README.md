@@ -1,7 +1,10 @@
 ## Introduction
 **XCurve is a Implementing nurbs modeling on qt.**
 
-Feature:
+![c](./image/c.png)
+![s](./image/s.png)
+
+## Feature:
 - Basis Function Computation
 - NURBS Curve and Surface
 - Curve and Surface Reverse
