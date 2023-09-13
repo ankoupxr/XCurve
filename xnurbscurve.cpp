@@ -59,23 +59,84 @@ void xnurbscurve::ComputeRationalCurve()
     m_curvePoints.clear();
     for(double t=0.0;t<=1.0;t+=m_step)
     {
-        Point3d p(0,0,0);
-        double denominator = 0.0;
-        for(int i=0;i<=n;i++)
+        Point3dW p;
+        int spanIndex = CurveUtil::FindSpan(k,m_knots,t);
+        std::vector<double> BValues = CurveUtil::BasisFunctions(t,spanIndex, k, m_knots);
+        for(int i=0;i<=k;i++)
         {
-            double BValue = CurveUtil::BasicFunctions(t,i, k, m_knots);
-            p.SetX(p.GetX()+m_controlPoints[i].GetX()*m_controlPoints[i].GetW()*BValue);
-            p.SetY(p.GetY()+m_controlPoints[i].GetY()*m_controlPoints[i].GetW()*BValue);
-            p.SetZ(p.GetZ()+m_controlPoints[i].GetZ()*m_controlPoints[i].GetW()*BValue);
-            denominator += BValue * m_controlPoints[i].GetW();
+            p.SetX(p.GetX()+m_controlPoints[spanIndex - k + i].GetX()*BValues[i]);
+            p.SetY(p.GetY()+m_controlPoints[spanIndex - k + i].GetY()*BValues[i]);
+            p.SetZ(p.GetZ()+m_controlPoints[spanIndex - k + i].GetZ()*BValues[i]);
+            p.SetW(p.GetW()+m_controlPoints[spanIndex - k + i].GetW() * BValues[i]);
         }
-        p.SetX(p.GetX()/denominator);
-        p.SetY(p.GetY()/denominator);
-        p.SetZ(p.GetZ()/denominator);
-        m_curvePoints.push_back(p);
+        Point3d res = p.ToPoint3d();
+        m_curvePoints.push_back(res);
     }
 }
 
+
+void xnurbscurve::KnotInsert(double u,int s,int r)
+{
+    int m = n + k +2;//插入前节点个数
+    int newc = n + r+1;//插入后的控制点个数
+    int index = CurveUtil::FindSpan(k,m_knots,u);
+    std::vector<Point3dW> NewControlPoints(newc);
+    std::vector<double> NewKnot(NewControlPoints.size() + k +1);
+    //设置新节点向量
+    for (int i = 0; i <= index; i++)
+    {
+        NewKnot[i] = m_knots[i];
+    }
+    for (int i = 0; i <= r; i++)
+    {
+        NewKnot[index+i] = u;
+    }
+    for(int i = index+1;i < m;i++)
+    {
+        NewKnot[i+r] = m_knots[i];
+    }
+    //设置控制点
+    for(int i = 0;i <= index - k;i++)
+    {
+        NewControlPoints[i] = m_controlPoints[i];
+    }
+    for (int i = k - s; i < n; i++)
+    {
+        NewControlPoints[i + r] = m_controlPoints[i];
+    }
+    //设置新的控制点
+    std::vector<Point3dW> NewControlPointsTemp(k - s + 1);
+    for (int i = 0; i <= k - s; i++)
+    {
+        NewControlPointsTemp[i] = m_controlPoints[index - k + i];
+    }
+    //插入r次
+    int L;
+    for(int j = 1;j <= r;j++)
+    {
+        L = index - k + j;
+        for (int i = 0; i <= k - j -s; i++)
+        {
+            double alpha = (u - m_knots[L + i]) / (m_knots[i + k +1]-m_knots[L + i]);
+            NewControlPointsTemp[i].SetX(alpha * NewControlPointsTemp[i+1].GetX() * NewControlPointsTemp[i+1].GetW()
+                                         + (1 - alpha) * NewControlPointsTemp[i+1].GetX() * NewControlPointsTemp[i+1].GetW());
+            NewControlPointsTemp[i].SetY(alpha * NewControlPointsTemp[i+1].GetY() * NewControlPointsTemp[i+1].GetW()
+                                         + (1 - alpha) * NewControlPointsTemp[i+1].GetY() * NewControlPointsTemp[i+1].GetW());
+            NewControlPointsTemp[i].SetZ(alpha * NewControlPointsTemp[i+1].GetZ() * NewControlPointsTemp[i+1].GetW()
+                                         + (1 - alpha) * NewControlPointsTemp[i+1].GetZ() * NewControlPointsTemp[i+1].GetW());
+            NewControlPointsTemp[i].SetW(alpha * NewControlPointsTemp[i+1].GetW() + (1-alpha)*NewControlPointsTemp[i+1].GetW());
+        }
+        NewControlPoints[L] = NewControlPointsTemp[0];
+        NewControlPoints[index + r - j -s] = NewControlPointsTemp[k - j - s];
+    }
+
+    //载入剩下的控制点和权值
+    for (int i = L + 1; i < k - s; i++) {
+        NewControlPoints[i] = NewControlPointsTemp[i - L];
+    }
+    m_controlPoints = NewControlPoints;
+    m_knots = NewKnot;
+}
 
 void xnurbscurve::draw()
 {
@@ -89,10 +150,10 @@ void xnurbscurve::drawControl()
 {
     for(int i=0;i<=n;i++)
     {
-        drawPoint(m_controlPoints[i]);
+        drawPoint(m_controlPoints[i].ToPoint3d());
         if(i+1 <= n)
         {
-        drawline(m_controlPoints[i],m_controlPoints[i+1]);
+            drawline2(m_controlPoints[i].ToPoint3d(),m_controlPoints[i+1].ToPoint3d());
         }
     }
 }
@@ -166,4 +227,5 @@ void xnurbscurve::MakeRevolvedSurf(Point3d S,Vector3d T,double theta)
             }
         }
     }
+    XNurbsSurface surface();
 }

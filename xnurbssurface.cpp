@@ -1,7 +1,7 @@
 #include "xnurbssurface.h"
 
 XNurbsSurface::XNurbsSurface(std::vector<std::vector<Point3dW>> controlPoints,
-                             std::vector<std::vector<double>> v,std::vector<std::vector<double>> u,int _m,int _n)
+                             std::vector<double> v,std::vector<double> u,int _m,int _n)
 {
     this->m_controlPoints = controlPoints;
     this->m_v = v;
@@ -23,163 +23,65 @@ void XNurbsSurface::ComputeNurbsSurface()
 
     for (double u = 0.0;u <= 1.0;u += m_step)
     {
+        int uSpanIndex = CurveUtil::FindSpan(p,m_u,u);
+        std::vector<double> BasisU = CurveUtil::BasisFunctions(u,uSpanIndex,p,m_u);
         for (double v = 0.0;v <= 1.0;v += m_step)
         {
-            Point3d point(0,0,0);
-            double weight = 0.0;
-            for (int i = 0;i < n + 1;i++)
+            int vSpanIndex = CurveUtil::FindSpan(q,m_v,v);
+            std::vector<double> BasisV = CurveUtil::BasisFunctions(v,vSpanIndex,q,m_v);
+            Point3dW point;
+            for (int i = 0;i <= q;i++)
             {
-                for (int j = 0; j < m + 1; j++)
+                Point3dW temp;
+                for (int j = 0; j <= p; j++)
                 {
-                    double BasicU = BasicFunction(u,j,p,m_u[i]);
-                    double BasicV = BasicFunction(v,i,q,m_v[j]);
-                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    weight += m_controlPoints[i][j].GetW()*BasicU*BasicV;
+                    temp.SetX(temp.GetX()+m_controlPoints[uSpanIndex-p+j][vSpanIndex-q+i].GetX()*BasisU[j]);
+                    temp.SetY(temp.GetY()+m_controlPoints[uSpanIndex-p+j][vSpanIndex-q+i].GetY()*BasisU[j]);
+                    temp.SetZ(temp.GetZ()+m_controlPoints[uSpanIndex-p+j][vSpanIndex-q+i].GetZ()*BasisU[j]);
+                    temp.SetW(temp.GetW()+m_controlPoints[uSpanIndex-p+j][vSpanIndex-q+i].GetW()*BasisU[j]);
                 }
+                point.SetX(point.GetX()+temp.GetX()*BasisV[i]);
+                point.SetY(point.GetY()+temp.GetY()*BasisV[i]);
+                point.SetZ(point.GetZ()+temp.GetZ()*BasisV[i]);
+                point.SetW(point.GetW()+temp.GetW()*BasisV[i]);
             }
-            point.SetX(point.GetX()/weight);
-            point.SetY(point.GetY()/weight);
-            point.SetZ(point.GetZ()/weight);
-            m_uSurFacePoint.push_back(point);
+            Point3d res = point.ToPoint3d();
+            m_uSurFacePoint.push_back(res);
         }
     }
 
     for (double v = 0.0;v <= 1.0;v += m_step)
     {
+        int vSpanIndex = CurveUtil::FindSpan(q,m_v,v);
+        std::vector<double> BasisV = CurveUtil::BasisFunctions(v,vSpanIndex,q,m_v);
         for (double u = 0.0;u <= 1.0;u += m_step)
         {
-            Point3d point(0,0,0);
-            double weight = 0.0;
-            for (int i = 0;i < n + 1;i++)
+            int uSpanIndex = CurveUtil::FindSpan(p,m_u,u);
+            std::vector<double> BasisU = CurveUtil::BasisFunctions(u,uSpanIndex,p,m_u);
+            Point3dW point;
+            for (int i = 0;i <= q;i++)
             {
-                for (int j = 0; j < m + 1; j++)
+                Point3dW temp;
+                for (int j = 0; j <= p; j++)
                 {
-                    double BasicU = BasicFunction(u,j,p,m_u[i]);
-                    double BasicV = BasicFunction(v,i,q,m_v[j]);
-                    point.SetX(point.GetX()+m_controlPoints[i][j].GetX()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    point.SetY(point.GetY()+m_controlPoints[i][j].GetY()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    point.SetZ(point.GetZ()+m_controlPoints[i][j].GetZ()*m_controlPoints[i][j].GetW()*BasicU*BasicV);
-                    weight += m_controlPoints[i][j].GetW()*BasicU*BasicV;
+                    temp.SetX(temp.GetX()+m_controlPoints[uSpanIndex-q+j][vSpanIndex-p+i].GetX()*BasisU[j]);
+                    temp.SetY(temp.GetY()+m_controlPoints[uSpanIndex-q+j][vSpanIndex-p+i].GetY()*BasisU[j]);
+                    temp.SetZ(temp.GetZ()+m_controlPoints[uSpanIndex-q+j][vSpanIndex-p+i].GetZ()*BasisU[j]);
+                    temp.SetW(temp.GetW()+m_controlPoints[uSpanIndex-q+j][vSpanIndex-p+i].GetW()*BasisU[j]);
                 }
+                point.SetX(point.GetX()+temp.GetX()*BasisV[i]);
+                point.SetY(point.GetY()+temp.GetY()*BasisV[i]);
+                point.SetZ(point.GetZ()+temp.GetZ()*BasisV[i]);
+                point.SetW(point.GetW()+temp.GetW()*BasisV[i]);
             }
-            point.SetX(point.GetX()/weight);
-            point.SetY(point.GetY()/weight);
-            point.SetZ(point.GetZ()/weight);
-            m_vSurFacePoint.push_back(point);
+            Point3d res = point.ToPoint3d();
+            m_vSurFacePoint.push_back(res);
         }
     }
 }
 
-void XNurbsSurface::GetALLKnotVector()
-{
-    for (int i = 0; i < n + 1; i++)
-    {
-        GetKnotVector(m_u[i],i,m,p,true);
-    }
-    for (int i = 0; i < m + 1; i++)
-    {
-        GetKnotVector(m_v[i],i,n,q,false);
-    }
-}
 
 
-void XNurbsSurface::GetKnotVector(std::vector<double>& T,int nCount,int num,int k, bool bU)
-{
-    //小于等于曲线次数k的节点值为0
-    for(int i = 0;i <= k;i++)
-    {
-        T[i] = 0.0;
-    }
-    //大于n的节点值为1
-    for(int i = num+1;i <= num + k + 1;i++)
-    {
-        T[i] = 1.0;
-    }
-    //计算其他节点值
-    for(int i = k+1;i <= num; i++)
-    {
-        double sum = 0.0;
-        for(int j = k + 1;j <= i;j++)
-        {
-            double numerator = 0.0;//计算分子
-            for (int loop = j - k;loop  <= j-1; loop++)
-            {
-                if(bU)//选择计算节点矢量U还是计算节点矢量V
-                    numerator+=(m_controlPoints[nCount][loop].GetX()-m_controlPoints[nCount][loop-1].GetX())*
-                                     (m_controlPoints[nCount][loop].GetX()-m_controlPoints[nCount][loop-1].GetX())
-                                 +(m_controlPoints[nCount][loop].GetY()-m_controlPoints[nCount][loop-1].GetY())*
-                                       (m_controlPoints[nCount][loop].GetY()-m_controlPoints[nCount][loop-1].GetY());
-                else
-                    numerator+=(m_controlPoints[loop][nCount].GetX()-m_controlPoints[loop-1][nCount].GetX())*
-                                     (m_controlPoints[loop][nCount].GetX()-m_controlPoints[loop-1][nCount].GetX())
-                                 +(m_controlPoints[loop][nCount].GetY()-m_controlPoints[loop-1][nCount].GetY())*
-                                       (m_controlPoints[loop][nCount].GetY()-m_controlPoints[loop-1][nCount].GetY());
-            }
-            double denominator = 0.0;//计算分母
-            for(int loop1 = k+1;loop1 <= num+1;loop1++)
-            {
-                for (int loop2 = loop1 - k;loop2 <= loop1 - 1;loop2++)
-                {
-                    if(bU)
-                    {
-                        denominator+=(m_controlPoints[nCount][loop2].GetX()-m_controlPoints[nCount][loop2-1].GetX())*
-                                           (m_controlPoints[nCount][loop2].GetX()-m_controlPoints[nCount][loop2-1].GetX())
-                                       +(m_controlPoints[nCount][loop2].GetY()-m_controlPoints[nCount][loop2-1].GetY())*
-                                             (m_controlPoints[nCount][loop2].GetY()-m_controlPoints[nCount][loop2-1].GetY());
-                    }
-                    else
-                    {
-                        denominator+=(m_controlPoints[loop2][nCount].GetX()-m_controlPoints[loop2-1][nCount].GetX())*
-                                           (m_controlPoints[loop2][nCount].GetX()-m_controlPoints[loop2-1][nCount].GetX())+
-                                       (m_controlPoints[loop2][nCount].GetY()-m_controlPoints[loop2-1][nCount].GetY())*
-                                           (m_controlPoints[loop2][nCount].GetY()-m_controlPoints[loop2-1][nCount].GetY());
-                    }
-                }
-            }
-            sum+=numerator/denominator;
-        }
-        T[i] = sum;
-    }
-
-}
-
-double XNurbsSurface::BasicFunction(double t,int i,int k,std::vector<double>& T)
-{
-    double value1,value2,value;
-    if(k==0)
-    {
-        if(t>=T[i] && t<T[i+1])
-            return 1.0;
-        else
-            return 0.0;
-    }
-    if(k>0)
-    {
-        if(t<T[i]||t>T[i+k+1])
-            return 0.0;
-        else
-        {
-            double coffcient1,coffcient2;//凸组合系数1，凸组合系数2
-            double denominator=0.0;//分母
-            denominator=T[i+k]-T[i];//递推公式第一项分母
-            if(denominator==0.0)//约定0/0
-                coffcient1=0.0;
-            else
-                coffcient1=(t-T[i])/denominator;
-            denominator=T[i+k+1]-T[i+1];//递推公式第二项分母
-            if(0.0==denominator)//约定0/0
-                coffcient2=0.0;
-            else
-                coffcient2=(T[i+k+1]-t)/denominator;
-            value1=coffcient1*BasicFunction(t,i,k-1,T);//递推公式第一项的值
-            value2=coffcient2*BasicFunction(t,i+1,k-1,T);//递推公式第二项的值
-            value=value1+value2;//基函数的值
-        }
-    }
-    return value;
-}
 
 void XNurbsSurface::draw()
 {

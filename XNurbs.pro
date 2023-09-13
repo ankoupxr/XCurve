@@ -8,8 +8,6 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += G:\myrender\eigen-3.4.0
-
 SOURCES += \
     curveutil.cpp \
     main.cpp \
@@ -53,7 +51,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-LIBS += F:/QT/5.15.2/msvc2019_64/lib/freeglut.lib
+LIBS += F:/Qt15/5.15.2/msvc2019_64/lib/freeglut.lib
 
 DISTFILES += \
     line.frag \

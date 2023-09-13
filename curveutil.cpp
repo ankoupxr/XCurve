@@ -4,13 +4,19 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
 {
     int n = knotVector.size() - degree - 2;
 
+    if (MathUtil::IsAlmostEqualTo(u, knotVector[n + 1]))
+    {
+        return n;
+    }
+
     int low = degree;
     int high = n + 1;
-    int mid = static_cast<int>(floor((low+high)/2.0));
+    int mid = (low+high)/2.0;
 
-    while(u < knotVector[mid] || u >= knotVector[mid+1])
+    while (u < knotVector[mid] ||
+           u>= knotVector[mid + 1])
     {
-        if(u < knotVector[mid])
+        if (u < knotVector[mid])
         {
             high = mid;
         }
@@ -18,11 +24,71 @@ int CurveUtil::FindSpan(int degree, std::vector<double>& knotVector, double u)
         {
             low = mid;
         }
-        mid = (low + high) / 2;
+        mid = (low + high) / 2.0;
     }
-    return(mid);
+    return mid;
 }
 
+
+void CurveUtil::GetKnotVector(std::vector<double>& T,std::vector<std::vector<Point3dW>> m_controlPoints,int nCount,int num,int k, bool bU)
+{
+    //小于等于曲线次数k的节点值为0
+    for(int i = 0;i <= k;i++)
+    {
+        T[i] = 0.0;
+    }
+    //大于n的节点值为1
+    for(int i = num+1;i <= num + k + 1;i++)
+    {
+        T[i] = 1.0;
+    }
+    //计算其他节点值
+    for(int i = k+1;i <= num; i++)
+    {
+        double sum = 0.0;
+        for(int j = k + 1;j <= i;j++)
+        {
+            double numerator = 0.0;//计算分子
+            for (int loop = j - k;loop  <= j-1; loop++)
+            {
+                if(bU)//选择计算节点矢量U还是计算节点矢量V
+                    numerator+=(m_controlPoints[nCount][loop].GetX()-m_controlPoints[nCount][loop-1].GetX())*
+                                     (m_controlPoints[nCount][loop].GetX()-m_controlPoints[nCount][loop-1].GetX())
+                                 +(m_controlPoints[nCount][loop].GetY()-m_controlPoints[nCount][loop-1].GetY())*
+                                       (m_controlPoints[nCount][loop].GetY()-m_controlPoints[nCount][loop-1].GetY());
+                else
+                    numerator+=(m_controlPoints[loop][nCount].GetX()-m_controlPoints[loop-1][nCount].GetX())*
+                                     (m_controlPoints[loop][nCount].GetX()-m_controlPoints[loop-1][nCount].GetX())
+                                 +(m_controlPoints[loop][nCount].GetY()-m_controlPoints[loop-1][nCount].GetY())*
+                                       (m_controlPoints[loop][nCount].GetY()-m_controlPoints[loop-1][nCount].GetY());
+            }
+            double denominator = 0.0;//计算分母
+            for(int loop1 = k+1;loop1 <= num+1;loop1++)
+            {
+                for (int loop2 = loop1 - k;loop2 <= loop1 - 1;loop2++)
+                {
+                    if(bU)
+                    {
+                        denominator+=(m_controlPoints[nCount][loop2].GetX()-m_controlPoints[nCount][loop2-1].GetX())*
+                                           (m_controlPoints[nCount][loop2].GetX()-m_controlPoints[nCount][loop2-1].GetX())
+                                       +(m_controlPoints[nCount][loop2].GetY()-m_controlPoints[nCount][loop2-1].GetY())*
+                                             (m_controlPoints[nCount][loop2].GetY()-m_controlPoints[nCount][loop2-1].GetY());
+                    }
+                    else
+                    {
+                        denominator+=(m_controlPoints[loop2][nCount].GetX()-m_controlPoints[loop2-1][nCount].GetX())*
+                                           (m_controlPoints[loop2][nCount].GetX()-m_controlPoints[loop2-1][nCount].GetX())+
+                                       (m_controlPoints[loop2][nCount].GetY()-m_controlPoints[loop2-1][nCount].GetY())*
+                                           (m_controlPoints[loop2][nCount].GetY()-m_controlPoints[loop2-1][nCount].GetY());
+                    }
+                }
+            }
+            sum+=numerator/denominator;
+        }
+        T[i] = sum;
+    }
+
+}
 
 double CurveUtil::BasicFunctions(double t,int i,int k,std::vector<double>& T)
 {

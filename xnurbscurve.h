@@ -20,7 +20,7 @@ public:
     void drawControl();
     std::vector<Point3dW> ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints);
     void GetKnotVector();//获取节点矢量
-    void KnotInsert();
+    void KnotInsert(double u,int s,int r);
     void ComputeRationalCurve();
     void MakeRevolvedSurf(Point3d S,Vector3d T,double theta);
 protected:

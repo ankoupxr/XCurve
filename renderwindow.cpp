@@ -78,38 +78,32 @@ void renderwindow::paintGL()
 //    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
 //                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),
 //                                  Point3dW(500,-100,0,1)};
-    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(20, 20, 0,2),
-                                  Point3dW(20, 10, 0,1),Point3dW(60,0,0,2),
-                                  Point3dW(40,0,0,1),Point3dW(100,40,0,2),Point3dW(60,20,0,1),Point3dW(70,0,0,1)};
-    std::vector<double> knot = {0,0,0,0,0.2,0.3,0.4,0.5,1,1,1,1};
-    xnurbscurve test(cps1,knot,3);
-    //test.GetKnotVector();
-    test.ComputeRationalCurve();
-    test.draw();
-    //test.MakeRevolvedSurf(Point3d(0,0,0),Vector3d(1,0,0),360);
-    test.drawControl();
-
-//    std::vector<std::vector<Point3dW>> cps1 ={
-//        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},
-//        {Point3dW(0,100,200,1),Point3dW(100,100,300,1),  Point3dW(200,100,300,1),Point3dW(300,100,300,1),Point3dW(400,100,200,1)},
-//        {Point3dW(0,200,200,1),Point3dW(100,200,300,1),  Point3dW(200,200,350,1),Point3dW(300,200,300,1),Point3dW(400,200,200,1)},
-//        {Point3dW(0,300,200,1),Point3dW(100,300,300,1),  Point3dW(200,300,300,1),Point3dW(300,300,300,1),Point3dW(400,300,200,1)},
-//        {Point3dW(0, 400, 100,1),Point3dW(100, 400, 200,1),  Point3dW(200, 400, 200,1),Point3dW(300, 400, 200,1),Point3dW(400, 400, 100,1)}
-//    };
-
-
-//    std::vector<std::vector<double>> u(5);
-//    std::vector<std::vector<double>> v(5);
-//    for(int i=0;i<5;i++)
-//    {
-//        u[i].resize(4+3+2);
-//        v[i].resize(4+3+2);
-//    }
-
-//    XNurbsSurface test(cps1,v,u,4,4);
-//    test.GetALLKnotVector();
-//    test.ComputeNurbsSurface();
+//    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(20, 20, 0,2),
+//                                  Point3dW(20, 10, 0,1),Point3dW(60,0,0,2),
+//                                  Point3dW(40,0,0,1),Point3dW(100,40,0,2),Point3dW(60,20,0,1),Point3dW(70,0,0,1)};
+//    std::vector<double> knot = {0,0,0,0,0.2,0.3,0.4,0.5,1,1,1,1};
+//    xnurbscurve test(cps1,knot,3);
+//    //test.KnotInsert(0.25,0,1);
+//    test.ComputeRationalCurve();
 //    test.draw();
+//    test.drawControl();
+
+    std::vector<std::vector<Point3dW>> cps1 ={
+        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},
+        {Point3dW(0,100,200,1),Point3dW(100,100,300,1),  Point3dW(200,100,300,1),Point3dW(300,100,300,1),Point3dW(400,100,200,1)},
+        {Point3dW(0,200,200,1),Point3dW(100,200,300,1),  Point3dW(200,200,350,1),Point3dW(300,200,300,1),Point3dW(400,200,200,1)},
+        {Point3dW(0,300,200,1),Point3dW(100,300,300,1),  Point3dW(200,300,300,1),Point3dW(300,300,300,1),Point3dW(400,300,200,1)},
+        {Point3dW(0, 400, 100,1),Point3dW(100, 400, 200,1),  Point3dW(200, 400, 200,1),Point3dW(300, 400, 200,1),Point3dW(400, 400, 100,1)}
+    };
+
+
+    std::vector<double> u (9);
+    std::vector<double> v(9);
+    CurveUtil::GetKnotVector(u,cps1,3,4,3,true);
+    CurveUtil::GetKnotVector(v,cps1,3,4,3,false);
+    XNurbsSurface tesst(cps1,v,u,4,4);
+    tesst.ComputeNurbsSurface();
+    tesst.draw();
 
 
  //   test->drawCircle();

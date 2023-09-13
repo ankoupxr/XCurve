@@ -27,12 +27,13 @@ void xcurve::drawline(Point3dW start,Point3dW end)
 void xcurve::drawPoint(Point3d start)
 {
     glColor3f(255,255.0,255.0);
+    glPointSize(5);
     glBegin(GL_POINTS);
     glVertex3d(start.GetX(), start.GetY(), start.GetZ());
     glEnd();
 }
 
-void xcurve::drawline2(Point3dW start,Point3dW end)
+void xcurve::drawline2(Point3d start,Point3d end)
 {
     glColor3f(255.0,255.0,255.0);
     glBegin(GL_LINES);

@@ -40,3 +40,17 @@ Point3d MathUtil::Intersect3DLines(Point3d P0,Vector3d T0,Point3d P2,Vector3d T2
 
     return intersection;
 }
+
+bool MathUtil::IsAlmostEqualTo(double value1, double value2, double tolerance)
+{
+    if (IsNaN(value1) || IsNaN(value2))
+        return false;
+    double eps = (abs(value1) + abs(value2) + 10) * tolerance;
+    double delta = value1 - value2;
+    return (-eps < delta) && (eps > delta);
+}
+
+bool MathUtil::IsNaN(double value)
+{
+    return value != value;
+}
