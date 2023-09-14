@@ -9,6 +9,7 @@
 #include <bsplinecurve.h>
 #include <xnurbssurface.h>
 #include <mathutil.h>
+#include <list>
 
 class xnurbscurve : xcurve
 {
@@ -20,7 +21,9 @@ public:
     void drawControl();
     std::vector<Point3dW> ComputeRationalCurveDerivs(int degree, int derivative, const std::vector<double>& knotVector, double paramT, const std::vector<Point3dW>& controlPoints);
     void GetKnotVector();//获取节点矢量
-    void KnotInsert(double u,int s,int r);
+    void KnotInsert(double u,int s,int r);//插入节点
+    void KnotRefine(std::vector<double> X,int r);//节点细化
+    void DccomposeCurveToBezier();//分解为Bezier曲线
     void ComputeRationalCurve();
     void MakeRevolvedSurf(Point3d S,Vector3d T,double theta);
 protected:

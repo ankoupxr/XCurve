@@ -138,6 +138,62 @@ void xnurbscurve::KnotInsert(double u,int s,int r)
     m_knots = NewKnot;
 }
 
+void xnurbscurve::KnotRefine(std::vector<double> X,int r)
+{
+    int m = n + k +2;
+    int a = CurveUtil::FindSpan(k,m_knots,X[0]);
+    int b = CurveUtil::FindSpan(k,m_knots,X[r]);
+    b = b + 1;
+    int newc = n + r + k + b - a;//插入后的控制点个数
+    std::vector<Point3dW> NewControlPoints(newc);
+    std::vector<double> NewKnot(X.size() + m_knots.size());
+    for (int j = 0; j <= a-k; j++)
+    {
+        NewControlPoints[j] = m_controlPoints[j];
+    }
+    for(int j = b - 1;j <= n;j++)
+    {
+        NewControlPoints[j+r+1] = m_controlPoints[j];
+    }
+    for(int j = 0;j <= a;j++)
+    {
+        NewKnot[j] = m_knots[j];
+    }
+    for(int j = b+k; j <= m;j++)
+    {
+        NewKnot[j + r +1] = m_knots[j];
+    }
+    int i = b + k - 1;
+    int newk = b + k + r;
+    for (int j = r; j >= 0; j--)
+    {
+        while (X[j] <= m_knots[i] && i > a)
+        {
+            NewControlPoints[newk - k -1] = m_controlPoints[i - k - 1];
+            NewKnot[newk] = m_knots[i];
+            newk = newk - 1;
+            i = i - 1;
+        }
+        NewControlPoints[newk - k - 1] = NewControlPoints[i - k - 1];
+        for (int l = 1; l <= k; l++)
+        {
+            int ind = newk - k + 1;
+            double alfa = NewKnot[newk + 1] - X[j];
+            if(abs(alfa) == 0.0)
+            {
+                NewControlPoints[ind - 1] =  NewControlPoints[ind - 1] * alfa  + NewControlPoints[ind] * (1.0 - alfa);
+            }
+        }
+        NewKnot[newk] = X[j];
+        newk = newk - 1;
+    }
+}
+
+void xnurbscurve::DccomposeCurveToBezier()
+{
+
+}
+
 void xnurbscurve::draw()
 {
     for(size_t i = 0;i < m_curvePoints.size()-1;i++)
