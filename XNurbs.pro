@@ -20,8 +20,8 @@ SOURCES += \
     xcurve.cpp \
     xnurbscircle.cpp \
     xnurbscurve.cpp \
-    xnurbssurface.cpp \
-    xnurbssurfacefit.cpp
+    xnurbsfit.cpp \
+    xnurbssurface.cpp
 
 HEADERS += \
     bsplinecurve.h \
@@ -38,8 +38,8 @@ HEADERS += \
     xcurve.h \
     xnurbscircle.h \
     xnurbscurve.h \
-    xnurbssurface.h \
-    xnurbssurfacefit.h
+    xnurbsfit.h \
+    xnurbssurface.h
 
 FORMS += \
     mainwindow.ui \

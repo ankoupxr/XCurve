@@ -78,15 +78,15 @@ void renderwindow::paintGL()
 //    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(100, 100, 0,4),
 //                                  Point3dW(300, 200, 0,1),Point3dW(400,100,0,1),
 //                                  Point3dW(500,-100,0,1)};
-    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(20, 20, 0,2),
-                                  Point3dW(20, 10, 0,1),Point3dW(60,0,0,2),
-                                  Point3dW(40,0,0,1),Point3dW(100,40,0,2),Point3dW(60,20,0,1),Point3dW(70,0,0,1)};
-    std::vector<double> knot = {0,0,0,0,0.2,0.3,0.4,0.5,1,1,1,1};
-    xnurbscurve test(cps1,knot,3);
-    //test.KnotInsert(0.25,0,1);
-    test.ComputeRationalCurve();
-    test.draw();
-    test.drawControl();
+//    std::vector<Point3dW> cps1 = { Point3dW(0, 0, 0,1),  Point3dW(20, 20, 0,2),
+//                                  Point3dW(20, 10, 0,1),Point3dW(60,0,0,2),
+//                                  Point3dW(40,0,0,1),Point3dW(100,40,0,2),Point3dW(60,20,0,1),Point3dW(70,0,0,1)};
+//    std::vector<double> knot = {0,0,0,0,0.2,0.3,0.4,0.5,1,1,1,1};
+//    xnurbscurve test(cps1,knot,3);
+//    //test.KnotInsert(0.25,0,1);
+//    test.ComputeRationalCurve();
+//    test.draw();
+//    test.drawControl();
 
 //    std::vector<std::vector<Point3dW>> cps1 ={
 //        {Point3dW(0, 0, 0,1),Point3dW(100, 0, 100,1),  Point3dW(200, 0, 200,1),Point3dW(300, 0, 100,1),Point3dW(400,0,0,1)},

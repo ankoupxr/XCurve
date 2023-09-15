@@ -5,7 +5,7 @@ painterwindow::painterwindow(QWidget *parent) :
     ui(new Ui::painterwindow)
 {
     ui->setupUi(this);
-    tra = -1000.0;
+    tra = -0.1;
     xRot = yRot = zRot = 0.0;
     oldPoint = QPoint(0, 0);
     trax = 0, tray = 0;
@@ -17,18 +17,19 @@ painterwindow::~painterwindow()
 //初始化
 void painterwindow::initializeGL()
 {
-    glClearColor(128.0,128.0,105.0,1);//清空当前的所有颜色
-    glShadeModel(GL_SMOOTH);//使用平滑着色模式
-    glClearDepth(1.0);//设置最远深度值
-    glEnable(GL_DEPTH_TEST);//启用深度测试
+    glClearColor(1.0, 1.0, 1.0, 0.0); //用白色清屏
+    glShadeModel(GL_SMOOTH);
+    glClearDepth(1.0);
+    glEnable(GL_DEPTH_TEST);
 }
 //自适应
 void painterwindow::resizeGL(int width,int height)
 {
-    glViewport( 0, 0, (GLint)width, (GLint)height );
+    glViewport( 0, 0, (GLint)width, (GLint)height ); //设置视口
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluPerspective( 45, (GLfloat)width/(GLfloat)height, 0.1, 9999.0 );
+    gluOrtho2D(-1, 1, -1, 1); //平行投影，设置视景体前部和照相机的相对位置
+
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 }
@@ -37,23 +38,8 @@ void painterwindow::paintGL()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    glTranslatef(0, 0, tra);
-    gluLookAt(0,0,1.0,0.0,0.0,0.0,0.0,1.0,0.0);
 
-    glColor3f(0.0, 0.0, 0.0);
-    glPointSize(10.0f);
-
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glEnable(GL_BLEND);
-
-    glEnable(GL_AUTO_NORMAL);
-    glEnable(GL_NORMALIZE);
-    glFrontFace(GL_CW);
-    glShadeModel(GL_SMOOTH);
-    glEnable(GL_LINE_SMOOTH);
-
+    gluLookAt(0,0,0.0,0.0,0.0,-1.0,0.0,1.0,0.0); //更改照相机的位置以及观看的方向等
 
 
     glColor3f(0.0,0.0,1.0);
@@ -77,28 +63,43 @@ void painterwindow::paintGL()
             glVertex3f(point[i].GetX(), point[i].GetY(), 0.0);
             glEnd();
         }
+        if(IsDrawCurve)
+        {
+
+        }
+        else{
+
+        }
     }
 }
 
 
 //鼠标点击事件
 void painterwindow::mousePressEvent(QMouseEvent *event) {
-        oldPoint = event->pos();
-        // 将鼠标点击事件的坐标转换为OpenGL坐标
-        double ox = this->width() / 2;
-        double oy = this->height() / 2;
-        double openglx = 0.0;
-        double opengly = 0.0;
-        openglx = (oldPoint.x() - ox);
-        opengly = -(oldPoint.y() - oy);
-        point.push_back(Point3d(openglx, opengly, 0.0));
-        update();
+    oldPoint = event->pos();
+    // 将鼠标点击事件的坐标转换为OpenGL坐标
+    double x = (oldPoint.x() - width()/2.0)/(width()/2.0);
+    double y = (height()/2.0 - oldPoint.y())/(height()/2.0);
+    point.push_back(Point3d(x, y, 0.0));
+    update();
 }
 
 
+void painterwindow::drawCurve()
+{
+    std::vector<Point3dW> ControlPoints;
+    for(int i = 0; i<= point.size()-1;i++ )
+    {
+        Point3dW p(point[i].GetX(), point[i].GetY(), 0.0,1);
+        ControlPoints.push_back(p);
+    }
+    std::vector<double> m_knots(11);
+    xnurbscurve xc(ControlPoints,m_knots,3);
+    curve.push_back(xc);
+}
 
 //滚轮事件
 void painterwindow::wheelEvent(QWheelEvent *e) {
-    tra += e->delta();
-    update();
+    //tra += e->delta();
+    //update();
 }

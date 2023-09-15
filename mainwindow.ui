@@ -45,8 +45,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>310</y>
-       <width>101</width>
+       <y>260</y>
+       <width>91</width>
        <height>24</height>
       </rect>
      </property>
@@ -62,8 +62,8 @@ background-color:rgb(255,255,255)</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>360</y>
-       <width>101</width>
+       <y>290</y>
+       <width>91</width>
        <height>24</height>
       </rect>
      </property>
@@ -79,8 +79,8 @@ background-color:rgb(255,255,255)</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>410</y>
-       <width>101</width>
+       <y>320</y>
+       <width>91</width>
        <height>24</height>
       </rect>
      </property>
@@ -96,8 +96,8 @@ background-color:rgb(255,255,255)</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>450</y>
-       <width>101</width>
+       <y>350</y>
+       <width>91</width>
        <height>24</height>
       </rect>
      </property>
@@ -107,6 +107,40 @@ background-color:rgb(255,255,255)</string>
      </property>
      <property name="text">
       <string>EditCurve</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>380</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
+     <property name="text">
+      <string>DrawPoint</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>410</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(85, 0, 0);
+background-color:rgb(255,255,255)</string>
+     </property>
+     <property name="text">
+      <string>DrawCurve</string>
      </property>
     </widget>
    </widget>

@@ -248,3 +248,50 @@ std::vector<std::vector<double>> CurveUtil::BasisFunctionsDerivs(int spanIndex, 
     }
     return derivatives;
 }
+
+std::vector<double> CurveUtil::GetUkByThroughPoints(const std::vector<Point3d> throughPoints)
+{
+    int n = throughPoints.size() - 1;
+    //计算弦长
+    double d = 0.0;
+    for (int i = 1; i <= n; i++)
+    {
+        d += throughPoints[i].Distance(throughPoints[i-1]);
+    }
+    //计算uk
+    std::vector<double> uk;
+    uk.resize(n+1,0.0);
+    uk[n] = 1.0;
+    for (int i = 1; i <= n - 1; i++)
+    {
+        uk[i] = uk[i-1] + (throughPoints[i].Distance(throughPoints[i-1]))/d;
+    }
+    return uk;
+
+}
+std::vector<double> CurveUtil::GetKnotVectorByThroughPoints(int k,int pointsCount,const std::vector<double> _uk)
+{
+    std::vector<double> knotVector;
+    std::vector<double> uk = _uk;
+
+    int size = pointsCount;
+    int n = size - 1;
+    int m = n + k + 1;
+
+    knotVector.resize(m + 1, 0.0);
+    for (int i = m - k; i <= m; i++)
+    {
+        knotVector[i] = 1.0;
+    }
+
+    for (int j = 1; j <= static_cast<int>(n - k + 1); j++)
+    {
+        double temp = 0.0;
+        for (int i = j; i <= static_cast<int>(j + k - 1); i++)
+        {
+            temp += uk[i];
+        }
+        knotVector[j + k] = (1.0 / k) * temp;
+    }
+    return knotVector;
+}

@@ -57,6 +57,14 @@ public:
         return z;
     }
 
+    double Distance(const Point3d &v) const
+    {
+        double dx = x - v.GetX();
+        double dy = y - v.GetY();
+        double dz = z - v.GetZ();
+
+        return sqrt(dx*dx + dy*dy + dz*dz);
+    }
 
     Point3d  operator +  (const Point3d &v) const { return Point3d(x+v.x, y+v.y, z+v.z); }
     Point3d  operator +  (const double &v) const { return Point3d(x+v, y+v, z+v); }

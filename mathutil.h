@@ -4,6 +4,7 @@
 #include <point3d.h>
 #include <point3dw.h>
 #include <vector3d.h>
+#include <vector>
 
 class MathUtil
 {
@@ -19,6 +20,11 @@ public:
     static bool IsAlmostEqualTo(double value1, double value2, double tolerance = 1E-6);
 
     static bool IsNaN(double value);
+
+    static bool LUDecomposition(std::vector<std::vector<double>> CompositionMat,std::vector<std::vector<double>>& UpperMat,std::vector<std::vector<double>>& LowMat);
+
+    static bool ForwardBackward(std::vector<std::vector<double>> CompositionMat,std::vector<std::vector<double>>& UpperMat,
+                                std::vector<std::vector<double>>& LowMat,std::vector<double>& rhs,std::vector<double>& sol);
 };
 
 #endif // MATHUTIL_H
